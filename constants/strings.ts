@@ -1,1 +1,1 @@
-export const AuthServerUrl = process.env.GEMZ_PUBLIC_AUTH_SERVER_URL!;
+export const AuthServerUrl = process.env.EXPO_PUBLIC_AUTH_SERVER_URL!;
