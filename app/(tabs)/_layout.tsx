@@ -1,8 +1,10 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
 import { Pressable, useColorScheme } from 'react-native';
+import { LayoutGridIcon, UploadCloudIcon, SearchIcon, BellIcon} from 'lucide-react-native';
 
 import Colors from '../../constants/Colors';
+import { Icon } from '@gluestack-ui/themed';
 
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -23,31 +25,32 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
       }}>
       <Tabs.Screen
-        name="index"
+        name="Overview"
         options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
+          headerShown: false,
+          tabBarLabel: "Overview",
+          tabBarIcon: ({ color }) => <Icon as={LayoutGridIcon} color="black" size="xl"/>,
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="Upload"
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarLabel: "Upload",
+          tabBarIcon: ({ color }) => <Icon as={UploadCloudIcon} color="black" size="xl"/>,
+        }}
+      />
+      <Tabs.Screen
+        name="Search"
+        options={{
+          tabBarLabel: "Search",
+          tabBarIcon: ({ color }) => <Icon as={SearchIcon} color="black" size="xl"/>,
+        }}
+      />
+      <Tabs.Screen
+        name="Notification"
+        options={{
+          tabBarLabel: "Notifications",
+          tabBarIcon: ({ color }) => <Icon as={BellIcon} color="black" size="xl"/>,
         }}
       />
     </Tabs>
