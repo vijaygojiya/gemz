@@ -55,7 +55,7 @@ export default function Login() {
       setErrors({ username: "", password: "" });
       ToastAndroid.show("Login Success", ToastAndroid.SHORT);
       router.push(
-        `/verify-otp${buildURLSearchParams({
+        `/VerifyOTP${buildURLSearchParams({
           phone_number: data.phone_number,
           user_id: data.user_id.toString(),
           next_path: "/Overview"
