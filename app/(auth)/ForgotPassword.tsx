@@ -22,68 +22,9 @@ import React, { useState } from "react";
 import Logo from "../../assets/images/logo.svg";
 import { Link, router } from "expo-router";
 import Colors from "../../constants/Colors";
-import { useAuthServerMutation } from "../../Hooks/useMutation";
-import buildURLSearchParams from "../../lib/buildURLSearchParams";
-import { ToastAndroid } from "react-native";
-interface IUserArgs {
-  username: string;
-}
-interface ILoginResponse {
-  user_id: number;
-  phone_number: string;
-  message?: string;
-}
+import ForgotPasswordForm from "../../components/Auth/Form/ForgotPasswordForm";
 
 export default function ForgotPassword() {
-  const [credentials, setCredentials] = useState({
-    username: "",
-  });
-  const [errors, setErrors] = useState<Record<string, string>>({
-    username: "",
-  });
-  const { trigger, isMutating } = useAuthServerMutation<
-    IUserArgs,
-    ILoginResponse
-  >("/forgot-password", {
-    onSuccess(data) {
-      if (data.user_id) {
-        setCredentials({ username: "" });
-        setErrors({ username: "" });
-        ToastAndroid.show("OTP Send", ToastAndroid.SHORT);
-        router.push(
-          `/verify-otp${buildURLSearchParams({
-            phone_number: data.phone_number,
-            user_id: data.user_id.toString(),
-            next_path: "/reset-password",
-          })}`
-        );
-      }
-    },
-  });
-
-  function validateForm() {
-    let newErrors = {
-      username: "",
-    };
-    if (!credentials.username) {
-      newErrors.username = "Username is required";
-    }
-    setErrors(newErrors);
-    return newErrors.username === "";
-  }
-
-  const handleReset = () => {
-    if (validateForm()) {
-      trigger(credentials);
-    }
-  };
-
-  function handleChange(name: string, value: string) {
-    setCredentials((prev) => ({ ...prev, [name]: value }));
-    if (errors[name]) {
-      setErrors({ ...errors, [name]: "" });
-    }
-  }
   return (
     <Box h="100%" justifyContent="center" p="$6">
       <Center>
@@ -91,41 +32,8 @@ export default function ForgotPassword() {
       </Center>
       <VStack space="2xl" reversed={false} mt="$20">
         <Heading size="lg">Enter your Username</Heading>
-        <FormControl isInvalid={!!errors.username}>
-          <Input
-            size="xl"
-            borderRadius="$lg"
-            borderWidth="$2"
-            borderColor="black"
-          >
-            <InputSlot pl="$3">
-              <InputIcon as={User} color="black" />
-            </InputSlot>
-            <InputField
-              value={credentials.username}
-              placeholder="Enter Username"
-              fontSize="$md"
-              onChangeText={(val: string) => handleChange("username", val)}
-            />
-          </Input>
-        </FormControl>
+        <ForgotPasswordForm />
       </VStack>
-      <Button
-        size="lg"
-        borderRadius="$lg"
-        bg="#1890FF"
-        mt="$10"
-        flexDirection="row"
-        alignItems="center"
-        onPress={() => handleReset()}
-        isDisabled={isMutating}
-      >
-        <HStack space="sm" alignItems="center">
-          {isMutating && <ButtonSpinner size="small" />}
-          <ButtonText>Proceed</ButtonText>
-          <ButtonIcon as={ChevronRightIcon} h="$7" w="$7" strokeWidth={3} />
-        </HStack>
-      </Button>
       <Link href={"/(auth)/Login"} asChild>
         <Text mt="$10" color={Colors.primary}>
           Back to Login
