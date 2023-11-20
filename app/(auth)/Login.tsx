@@ -32,13 +32,16 @@ export default function Login() {
     username: "",
     password: "",
   });
+  const [errors, setErrors] = useState<Record<string, string>>({
+    username: "",
+    password: "",
+  });
   const [showPassword, setShowPassword] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string>>({username: "", password: ""});
 
-  const { trigger } = useAuthServerMutation("/login", {
+  const { trigger, isMutating } = useAuthServerMutation("/login", {
     onSuccess: (data) => {
       setCredentials({ username: "", password: "" });
-      setErrors({ username: '', password: '' });
+      setErrors({ username: "", password: "" });
     },
   });
 
@@ -54,7 +57,7 @@ export default function Login() {
     if (!credentials.username) {
       newErrors.username = "Username is required";
     }
-    if(!credentials.password) {
+    if (!credentials.password) {
       newErrors.password = "Password is required";
     }
     setErrors(newErrors);
@@ -62,7 +65,7 @@ export default function Login() {
   }
 
   function handleLogin() {
-    if(validateForm()){
+    if (validateForm()) {
       trigger(credentials);
     }
   }
@@ -70,7 +73,7 @@ export default function Login() {
   function handleChange(name: string, value: string) {
     setCredentials((prev) => ({ ...prev, [name]: value }));
     if (errors[name]) {
-      setErrors({ ...errors, [name]: '' });
+      setErrors({ ...errors, [name]: "" });
     }
   }
 
@@ -104,9 +107,7 @@ export default function Login() {
             />
           </Input>
           <FormControlError>
-            <FormControlErrorText>
-              {errors.username}
-            </FormControlErrorText>
+            <FormControlErrorText>{errors.username}</FormControlErrorText>
           </FormControlError>
         </FormControl>
         <FormControl isInvalid={!!errors.password}>
@@ -130,9 +131,7 @@ export default function Login() {
             </InputSlot>
           </Input>
           <FormControlError>
-            <FormControlErrorText>
-              {errors.password}
-            </FormControlErrorText>
+            <FormControlErrorText>{errors.password}</FormControlErrorText>
           </FormControlError>
         </FormControl>
 
@@ -153,6 +152,7 @@ export default function Login() {
         flexDirection="row"
         alignItems="center"
         onPress={handleLogin}
+        isDisabled={isMutating}
       >
         <ButtonText>Log in</ButtonText>
         <ButtonIcon
