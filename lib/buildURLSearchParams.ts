@@ -6,6 +6,6 @@ export default function buildURLSearchParams(
   const urlSearchParams = new URLSearchParams(
     typeof params === "string" ? params : pickBy(params, isString)
   );
-  urlSearchParams.sort();
+  // urlSearchParams.sort();
   return urlSearchParams.toString() ? `?${urlSearchParams}` : "";
 }

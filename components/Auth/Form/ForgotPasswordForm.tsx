@@ -1,4 +1,4 @@
-import { useAuthServerMutation } from "../../../Hooks/useMutation";
+import { useAuthServerMutation } from "../../../hooks/useMutation";
 import buildURLSearchParams from "../../../lib/buildURLSearchParams";
 import { ToastAndroid } from "react-native";
 import {
@@ -47,7 +47,7 @@ const ForgotPasswordForm = () => {
           `/verify-otp${buildURLSearchParams({
             phone_number: data.phone_number,
             user_id: data.user_id.toString(),
-            next_path: "/reset-password",
+            next_path: "/ResetPassword",
           })}`
         );
       }
