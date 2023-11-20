@@ -22,16 +22,35 @@ import {
 import { useState } from "react";
 import Logo from "../../assets/images/logo.svg";
 import { Link } from "expo-router";
+import { useAuthServerMutation } from "../../hooks/useMutation";
 
 export default function Login() {
-  const [email,setEmail] = useState("");
+  const [credentials, setCredentials] = useState({
+    username: "",
+    password: "",
+  });
   const [showPassword, setShowPassword] = useState(false);
+
+  const { trigger } = useAuthServerMutation("/login", {
+    onSuccess: (data) => {
+      console.log("Login success: ", data);
+    },
+  });
+
   function handleVisibility() {
     setShowPassword(!showPassword);
   }
 
   function handleLogin() {
-    console.warn("Email:", email);
+    if (!credentials.username || !credentials.password) {
+      console.warn("Missing username or password");
+      return;
+    }
+    trigger(credentials);
+  }
+
+  function handleChange(name: string, value: string) {
+    setCredentials((prev) => ({ ...prev, [name]: value }));
   }
 
   return (
@@ -56,7 +75,11 @@ export default function Login() {
           <InputSlot pl="$3">
             <InputIcon as={User} color="black" />
           </InputSlot>
-          <InputField placeholder="email" fontSize="$md" onChangeText={(val:string) => setEmail(val)}/>
+          <InputField
+            placeholder="username"
+            fontSize="$md"
+            onChangeText={(val: string) => handleChange("username", val)}
+          />
         </Input>
         <Input
           size="xl"
@@ -71,6 +94,7 @@ export default function Login() {
             type={showPassword ? "text" : "password"}
             placeholder="password"
             fontSize="$md"
+            onChangeText={(val: string) => handleChange("password", val)}
           />
           <InputSlot pr="$3" onPress={handleVisibility}>
             <InputIcon as={showPassword ? EyeIcon : EyeOffIcon} />
