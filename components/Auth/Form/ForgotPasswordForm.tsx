@@ -42,7 +42,7 @@ const ForgotPasswordForm = () => {
       if (data.user_id) {
         setCredentials({ username: "" });
         setErrors({ username: "" });
-        ToastAndroid.show("OTP Send", ToastAndroid.SHORT);
+        // ToastAndroid.show("OTP Send", ToastAndroid.SHORT);
         router.push(
           `/verify-otp${buildURLSearchParams({
             phone_number: data.phone_number,
@@ -79,7 +79,6 @@ const ForgotPasswordForm = () => {
   }
   return (
     <>
-      {" "}
       <FormControl isInvalid={!!errors.username}>
         <Input
           size="xl"
