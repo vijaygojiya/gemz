@@ -33,7 +33,7 @@ export default function Login() {
 
   const { trigger } = useAuthServerMutation("/login", {
     onSuccess: (data) => {
-      console.log("Login success: ", data);
+      setCredentials({ username: "", password: "" });
     },
   });
 
