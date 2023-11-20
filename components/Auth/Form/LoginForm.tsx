@@ -24,7 +24,17 @@ import {
 import { useState } from "react";
 import { Link } from "expo-router";
 import { useAuthServerMutation } from "../../../hooks/useMutation";
-
+import buildURLSearchParams from "../../../lib/buildURLSearchParams";
+import { router } from "expo-router";
+interface IUserArgs {
+  username: string;
+  password: string;
+}
+interface ILoginResponse {
+  user_id: number;
+  phone_number: string;
+  message?: string;
+}
 export default function Login() {
   const [credentials, setCredentials] = useState({
     username: "",
@@ -36,11 +46,21 @@ export default function Login() {
   });
   const [showPassword, setShowPassword] = useState(false);
 
-  const { trigger, isMutating } = useAuthServerMutation("/login", {
+  const { trigger, isMutating } = useAuthServerMutation<
+    IUserArgs,
+    ILoginResponse
+  >("/login", {
     onSuccess: (data) => {
       setCredentials({ username: "", password: "" });
       setErrors({ username: "", password: "" });
       ToastAndroid.show("Login Success", ToastAndroid.SHORT);
+      router.push(
+        `/VerifyOTP${buildURLSearchParams({
+          phone_number: data.phone_number,
+          user_id: data.user_id.toString(),
+          next_path: "/Overview"
+        })}`
+      );
     },
   });
 
@@ -143,14 +163,9 @@ export default function Login() {
         isDisabled={isMutating}
       >
         <HStack space="sm" alignItems="center">
-          {isMutating && <Spinner size="small"  />}
+          {isMutating && <Spinner size="small" />}
           <ButtonText>Log in</ButtonText>
-          <ButtonIcon
-            as={ChevronRightIcon}
-            h="$7"
-            w="$7"
-            strokeWidth={3}
-          />
+          <ButtonIcon as={ChevronRightIcon} h="$7" w="$7" strokeWidth={3} />
         </HStack>
       </Button>
     </>

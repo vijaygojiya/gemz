@@ -11,12 +11,13 @@ import {
   VStack,
 } from "@gluestack-ui/themed";
 import OtpIllustration from "../../assets/images/otp-illustration.svg";
-import { Link } from "expo-router";
+import { Link, useLocalSearchParams } from "expo-router";
 
 const OTP_WAIT_TIME = 60;
 
 export default function VerifyOTP() {
   const [seconds, setSeconds] = useState(OTP_WAIT_TIME);
+  const { phone_number, user_id, next_path } = useLocalSearchParams();
   const resendOTPEnabled = seconds === 0;
   const inputRefs = Array(6)
     .fill(null)
@@ -66,7 +67,11 @@ export default function VerifyOTP() {
         </HStack>
         <Text textAlign="center" fontWeight="bold">
           Didn&apos;t receive OTP?{" "}
-          <Text onPress={resendOtp} color={resendOTPEnabled ? "#1890FF" : "grey"} fontWeight="bold">
+          <Text
+            onPress={resendOtp}
+            color={resendOTPEnabled ? "#1890FF" : "grey"}
+            fontWeight="bold"
+          >
             Resend Code
             {resendOTPEnabled
               ? ""

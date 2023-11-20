@@ -44,10 +44,10 @@ const ForgotPasswordForm = () => {
         setErrors({ username: "" });
         // ToastAndroid.show("OTP Send", ToastAndroid.SHORT);
         router.push(
-          `/verify-otp${buildURLSearchParams({
+          `/VerifyOTP${buildURLSearchParams({
             phone_number: data.phone_number,
             user_id: data.user_id.toString(),
-            next_path: "/reset-password",
+            next_path: "/ResetPassword",
           })}`
         );
       }
