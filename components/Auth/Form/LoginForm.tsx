@@ -5,13 +5,15 @@ import {
   FormControl,
   FormControlError,
   FormControlErrorText,
+  HStack,
   Input,
   InputField,
   InputIcon,
   InputSlot,
+  Spinner,
   Text,
-  VStack,
 } from "@gluestack-ui/themed";
+import { ToastAndroid } from "react-native";
 import {
   User,
   Lock,
@@ -38,6 +40,7 @@ export default function Login() {
     onSuccess: (data) => {
       setCredentials({ username: "", password: "" });
       setErrors({ username: "", password: "" });
+      ToastAndroid.show("Login Success", ToastAndroid.SHORT);
     },
   });
 
@@ -57,11 +60,13 @@ export default function Login() {
       newErrors.password = "Password is required";
     }
     setErrors(newErrors);
-    return Object.values(newErrors).length === 0;
+    return newErrors.username === "" && newErrors.password === "";
   }
 
   function handleLogin() {
+    console.log("Login Clicked");
     if (validateForm()) {
+      console.log("Login Triggered");
       trigger(credentials);
     }
   }
@@ -86,6 +91,7 @@ export default function Login() {
             <InputIcon as={User} color="black" />
           </InputSlot>
           <InputField
+            value={credentials.username}
             placeholder="username"
             fontSize="$md"
             onChangeText={(val: string) => handleChange("username", val)}
@@ -106,6 +112,7 @@ export default function Login() {
             <InputIcon as={Lock} color="black" />
           </InputSlot>
           <InputField
+            value={credentials.password}
             type={showPassword ? "text" : "password"}
             placeholder="password"
             fontSize="$md"
@@ -137,15 +144,16 @@ export default function Login() {
         onPress={handleLogin}
         isDisabled={isMutating}
       >
-        <ButtonText>Log in</ButtonText>
-        <ButtonIcon
-          as={ChevronRightIcon}
-          h="$7"
-          w="$7"
-          ml="$3"
-          mt="$1"
-          strokeWidth={3}
-        />
+        <HStack space="sm" alignItems="center">
+          {isMutating && <Spinner size="small"  />}
+          <ButtonText>Log in</ButtonText>
+          <ButtonIcon
+            as={ChevronRightIcon}
+            h="$7"
+            w="$7"
+            strokeWidth={3}
+          />
+        </HStack>
       </Button>
     </>
   );
