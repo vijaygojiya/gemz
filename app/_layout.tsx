@@ -26,7 +26,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    Poppins: require("../assets/fonts/Poppins-Regular.ttf"),
     ...FontAwesome.font,
   });
 
@@ -57,7 +57,6 @@ function RootLayoutNav() {
         <Stack>
           <Stack.Screen name="(auth)/Onboarding" options={{ headerShown: false }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
         </Stack>
       </ThemeProvider>
     </GluestackUIProvider>
