@@ -64,9 +64,7 @@ export default function Login() {
   }
 
   function handleLogin() {
-    console.log("Login Clicked");
     if (validateForm()) {
-      console.log("Login Triggered");
       trigger(credentials);
     }
   }
