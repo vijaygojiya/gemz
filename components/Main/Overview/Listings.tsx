@@ -1,7 +1,19 @@
-import { Box, HStack, Pressable, Text } from "@gluestack-ui/themed";
-import { ScrollView } from "react-native";
-import { useState } from "react";
+import React, { useState } from "react";
+import {
+  ScrollView,
+  Pressable,
+  Text,
+  VStack,
+  HStack,
+} from "@gluestack-ui/themed";
 import Colors from "../../../constants/Colors";
+import OverviewList from "./OverviewList";
+import Family from "./Family";
+import Vaultz from "./Vaultz";
+import Analysis from "./Analysis";
+import Planning from "./Planning";
+import Assets from "./Assets";
+import { TTabType } from "../../../interfaces/Main";
 
 const tabsData = [
   {
@@ -24,10 +36,30 @@ const tabsData = [
   },
 ];
 
+function List(type: TTabType): React.ReactNode {
+  switch (type) {
+    case "Overview":
+      return <OverviewList />;
+    case "Family":
+      return <Family />;
+    case "Vaultz":
+      return <Vaultz />;
+    case "Analysis":
+      return <Analysis />;
+    case "Planning":
+      return <Planning />;
+    case "Assets":
+      return <Assets />;
+    default:
+      return null;
+  }
+}
+
 export default function Listings() {
-  const [activeTab, setActiveTab] = useState(tabsData[0]);
+  const [activeTab, setActiveTab] = useState<TTabType>("Overview");
+
   return (
-    <Box>
+    <VStack space="2xl">
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <HStack space="lg" mx="$0.5">
           {tabsData.map((tab: any) => (
@@ -35,22 +67,13 @@ export default function Listings() {
               key={tab.title}
               my="$0.5"
               py="$1"
-              borderBottomWidth={activeTab === tab ? 3 : 0}
+              borderBottomWidth={activeTab === tab.title ? 3 : 0}
               borderColor="$borderLight900"
-              sx={{
-                ":hover": {
-                  borderBottomWidth: 3,
-                  borderColor:
-                  activeTab === tab
-                      ? "$borderLight900"
-                      : "$borderLight200",
-                },
-              }}
-              onPress={() => setActiveTab(tab)}
+              onPress={() => setActiveTab(tab.title)}
             >
               <Text
                 size="sm"
-                color={activeTab === tab ? Colors.dark : "$textLight600"}
+                color={activeTab === tab.title ? Colors.dark : "$textLight600"}
                 fontWeight="$medium"
               >
                 {tab.title}
@@ -59,6 +82,7 @@ export default function Listings() {
           ))}
         </HStack>
       </ScrollView>
-    </Box>
+      {List(activeTab)}
+    </VStack>
   );
 }
