@@ -9,14 +9,22 @@ import {
   VStack,
   View,
 } from "@gluestack-ui/themed";
-import { Stack } from "expo-router";
-import Header from "../../../components/General/Header";
-import Listings from "../../../components/Main/Overview/Listings";
-import Colors from "../../../constants/Colors";
+import { Redirect, Stack } from "expo-router";
+import Header from "../../components/General/Header";
+import Listings from "../../components/Main/Overview/Listings";
+import Colors from "../../constants/Colors";
+import { useAuth } from "../../context/AuthProvider";
+import { useEffect } from "react";
+export default function index() {
+  // const { isLoggedIn } = useAuth();
 
-export default function Overview() {
+  // useEffect(() => {
+  //   if (!isLoggedIn) {
+  //     <Redirect href={"/(auth)/Onboarding"} />;
+  //   }
+  // }, [isLoggedIn]);
+
   return (
-    // <Redirect href="/(auth)/Onboarding" />
     <View bg="#fff" height="100%">
       <Stack.Screen
         options={{

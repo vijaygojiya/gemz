@@ -58,7 +58,7 @@ export default function Login() {
         `/VerifyOTP${buildURLSearchParams({
           phone_number: data.phone_number,
           user_id: data.user_id.toString(),
-          next_path: "/Overview"
+          next_path: "(tabs)"
         })}`
       );
     },

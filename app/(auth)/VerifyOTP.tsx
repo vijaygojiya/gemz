@@ -14,6 +14,7 @@ import OtpIllustration from "../../assets/images/otp-illustration.svg";
 import { Link, router, useLocalSearchParams } from "expo-router";
 import { useAuthServerMutation } from "../../hooks/useMutation";
 import buildURLSearchParams from "../../lib/buildURLSearchParams";
+import { save } from "../../lib/secureStorage";
 
 const OTP_WAIT_TIME = 60;
 
@@ -27,16 +28,40 @@ export default function VerifyOTP() {
     "/verify-otp",
     {
       onSuccess(data) {
-        if (data.access_token) {
+        const { access_token, refresh_token } = data;
+        console.log("Credentials Keys : ", access_token, refresh_token);
+        if (access_token && refresh_token) {
           // ToastAndroid.show("OTP Send", ToastAndroid.SHORT);
           // ${buildURLSearchParams({
           //   phone_number: data.phone_number,
           //   user_id: data.user_id.toString(),
           //   next_path: "/ResetPassword",
           // })}`
-          router.push(`${next_path}${buildURLSearchParams({
-            access_token: data.access_token
-          })}` as any);
+          switch (next_path) {
+            case "/ResetPassword": {
+              (async () => {
+                await save("accessToken", access_token);
+              })();
+              router.push(
+                `${next_path}${buildURLSearchParams({
+                  phone_number: data.phone_number,
+                  user_id: data.user_id.toString(),
+                  next_path: "/ResetPassword",
+                })}` as any
+              );
+              break;
+            }
+            default: {
+              (async () => {
+                await save("accessToken", access_token);
+                await save("refreshToken", refresh_token);
+              })();
+              console.log("Next Path : ", next_path);
+              console.log("Saved the access and refresh token");
+              router.push(next_path as any);
+              break;
+            }
+          }
         }
       },
       onError() {
