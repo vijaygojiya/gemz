@@ -10,7 +10,12 @@ async function fetcher({ url, init, error }: IFetcherParams) {
       ...init,
       headers: {
         "Accept-Encoding": "gzip",
+      //   {
+      //     "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAwNDg2MTk3LCJpYXQiOjE3MDA0ODI1OTcsImp0aSI6ImQwYzY1MzFmN2VmZTQyNWJhZjVhNTI2OWNkNjM3YzRlIiwidXNlcl9pZCI6NTR9.v9D4yKtBrAZOjn1UwSfby5IgCgtu-dYhepFdypJcErQ",
+      //     "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcwMDU2ODk5NywiaWF0IjoxNzAwNDgyNTk3LCJqdGkiOiIyZTZiMDM4NTYwNTY0ODI0ODYzYmNkYjAzYmZlZTdmZSIsInVzZXJfaWQiOjU0fQ.O-dvBfwNv6I7eEDC7_szjto1qY7koVdpEzbCWH_euIE"
+      // }
         Authorization: "Token c48ba34430ee8fedb986c15b31cf5e8cbf33acf1",
+        // Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAwNDg2MTk3LCJpYXQiOjE3MDA0ODI1OTcsImp0aSI6ImQwYzY1MzFmN2VmZTQyNWJhZjVhNTI2OWNkNjM3YzRlIiwidXNlcl9pZCI6NTR9.v9D4yKtBrAZOjn1UwSfby5IgCgtu-dYhepFdypJcErQ",
         ...init.headers,
       },
     });
