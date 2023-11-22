@@ -1,3 +1,5 @@
+
+import React from "react";
 import Colors from "../../constants/Colors";
 import { Text, View } from "@gluestack-ui/themed";
 import { StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
