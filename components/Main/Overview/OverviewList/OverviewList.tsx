@@ -2,9 +2,9 @@ import { HStack, Center, Text } from "@gluestack-ui/themed";
 import React from "react";
 import { TouchableOpacity, StyleSheet } from "react-native";
 import PositionIcon from "../../../assets/images/Investment.svg";
-import PhysicalIcon from "../../../assets/images/physical.svg";
+import ProfitIcon from "../../../assets/images/Profit.svg";
 import BankIcon from "../../../assets/images/bank.svg";
-import LiquidIcon from "../../../assets/images/liquid.svg";
+import TransactionIcon from "../../../assets/images/Transactions.svg";
 import NetWorthCard from "./NetworthCard";
 import { Link } from "expo-router";
 
@@ -26,7 +26,7 @@ export default function OverviewList() {
         <Link href={"/insights/performers"} asChild>
           <TouchableOpacity style={styles.card}>
             <Center>
-              <PhysicalIcon />
+              <ProfitIcon />
             </Center>
             <Text size="sm" textAlign="center">
               Gainers and Losers
@@ -48,7 +48,7 @@ export default function OverviewList() {
         <Link href={"/insights/transactions"} asChild>
           <TouchableOpacity style={styles.card}>
             <Center>
-              <LiquidIcon />
+              <TransactionIcon />
             </Center>
             <Text size="sm" textAlign="center">
               Transactions
