@@ -8,18 +8,19 @@ import {
 
 import Colors from "../../constants/Colors";
 import { Icon } from "@gluestack-ui/themed";
-import { useAuth } from "../../context/AuthProvider";
-import { useEffect } from "react";
+import React from "react";
+import { useContext, useEffect } from "react";
+import { AuthContext } from "../../context/AuthProvider";
 
 export default function TabLayout() {
-  const { isLoggedIn } = useAuth();
+  const authContext = useContext(AuthContext);
 
-  console.log(isLoggedIn,"Index Logged In")
+  // console.log(isLoggedIn,"Index Logged In")
 
-  if (!isLoggedIn) {
-    return <Redirect href={"/(auth)/Onboarding"} />;
-    // router.push("/(auth)/Onboarding")
-  }
+  // if (!isLoggedIn) {
+  //   return <Redirect href={"/(auth)/Onboarding"} />;
+  //   // router.push("/(auth)/Onboarding")
+  // }
 
   return (
     <Tabs

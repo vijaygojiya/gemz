@@ -8,21 +8,22 @@ import {
   Text,
   VStack,
   View,
+  Button,
+  ButtonText,
 } from "@gluestack-ui/themed";
 import { Redirect, Stack } from "expo-router";
 import Header from "../../components/General/Header";
 import Listings from "../../components/Main/Overview/Listings";
 import Colors from "../../constants/Colors";
-import { useAuth } from "../../context/AuthProvider";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { AuthContext } from "../../context/AuthProvider";
+import React from "react";
 export default function index() {
-  // const { isLoggedIn } = useAuth();
+  const {authState,logout} = useContext(AuthContext);
 
-  // useEffect(() => {
-  //   if (!isLoggedIn) {
-  //     <Redirect href={"/(auth)/Onboarding"} />;
-  //   }
-  // }, [isLoggedIn]);
+  if (authState?.authenticated === false) {
+    return <Redirect href={"/(auth)/Onboarding"} />;
+  }
 
   return (
     <View bg="#fff" height="100%">
@@ -33,6 +34,9 @@ export default function index() {
             justifyContent="space-between"
             alignItems="center"
           >
+            <Button onPress={()=>logout()}>
+              <ButtonText>Logout</ButtonText>
+            </Button>
             <VStack space="none">
               <Heading fontWeight="light" size="xl">
                 Welcome,

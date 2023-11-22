@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { StyleSheet, TextInput } from "react-native";
 import {
   Box,
@@ -15,12 +15,14 @@ import { Link, router, useLocalSearchParams } from "expo-router";
 import { useAuthServerMutation } from "../../hooks/useMutation";
 import buildURLSearchParams from "../../lib/buildURLSearchParams";
 import { save } from "../../lib/secureStorage";
+import { AuthContext } from "../../context/AuthProvider";
 
 const OTP_WAIT_TIME = 60;
 
 export default function VerifyOTP() {
   const [seconds, setSeconds] = useState(OTP_WAIT_TIME);
   const [otpValues, setOtpValues] = useState(Array(6).fill("")); // State to store OTP values
+  const authContext = useContext(AuthContext);
 
   const { phone_number, user_id, next_path } = useLocalSearchParams();
 
@@ -53,11 +55,12 @@ export default function VerifyOTP() {
             }
             default: {
               (async () => {
-                await save("accessToken", access_token);
-                await save("refreshToken", refresh_token);
+                authContext.setAuthState({
+                  ...authContext.authState,
+                  authenticated: true,
+                  accessToken: access_token,
+                });
               })();
-              console.log("Next Path : ", next_path);
-              console.log("Saved the access and refresh token");
               router.push(next_path as any);
               break;
             }
