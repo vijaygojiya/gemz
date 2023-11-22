@@ -1,6 +1,6 @@
 import { Box, HStack, Heading, Text, VStack, View } from "@gluestack-ui/themed";
 import { StyleSheet } from "react-native";
-import Colors from "../../../constants/Colors";
+import Colors from "../../../../constants/Colors";
 
 export default function NetWorthCard() {
   return (

@@ -26,13 +26,8 @@ export default function index() {
 
   return (
     <View bg="#fff" height="100%">
-      <Stack.Screen
-        options={{
-          header: () => <Header />,
-        }}
-      />
       <ScrollView>
-        <VStack space="2xl" mt="$20" py="$5" px="$3">
+        <VStack space="2xl" mt="$10" py="$5" px="$3">
           <View
             flexDirection="row"
             justifyContent="space-between"

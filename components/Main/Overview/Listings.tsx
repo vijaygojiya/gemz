@@ -7,12 +7,12 @@ import {
   HStack,
 } from "@gluestack-ui/themed";
 import Colors from "../../../constants/Colors";
-import OverviewList from "./OverviewList";
-import Family from "./Family";
-import Vaultz from "./Vaultz";
-import Analysis from "./Analysis";
-import Planning from "./Planning";
-import Assets from "./Assets";
+import OverviewList from "./OverviewList/OverviewList";
+import Family from "./Family/Family";
+import Vaultz from "./Vaultz/Vaultz";
+import Analysis from "./Analysis/Analysis";
+import Planning from "./Planning/Planning";
+import Assets from "./Assets/Assets";
 import { TTabType } from "../../../interfaces/Main";
 
 const tabsData = [
