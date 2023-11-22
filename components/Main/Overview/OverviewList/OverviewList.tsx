@@ -1,10 +1,10 @@
 import { HStack, Center, Text } from "@gluestack-ui/themed";
 import React from "react";
 import { TouchableOpacity, StyleSheet } from "react-native";
-import PositionIcon from "../../../assets/images/Investment.svg";
-import ProfitIcon from "../../../assets/images/Profit.svg";
-import BankIcon from "../../../assets/images/bank.svg";
-import TransactionIcon from "../../../assets/images/Transactions.svg";
+import PositionIcon from "../../../../assets/images/Investment.svg"
+import ProfitIcon from "../../../../assets/images/Profit.svg";
+import BankIcon from "../../../../assets/images/bank.svg";
+import TransactionIcon from "../../../../assets/images/Transactions.svg";
 import NetWorthCard from "./NetworthCard";
 import { Link } from "expo-router";
 
