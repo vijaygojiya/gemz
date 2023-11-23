@@ -45,7 +45,7 @@ export default function ResetPassword() {
       onError: (data) => {
         console.log(data.stack);
       },
-    }
+    },
   );
 
   function handleVisibility() {

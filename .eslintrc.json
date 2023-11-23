@@ -22,7 +22,7 @@
     "@typescript-eslint/no-non-null-assertion": "off",
     "react-native/split-platform-components": "off",
     "no-useless-return": "off",
-    "@typescript-eslint/naming-convention":"off",
+    "@typescript-eslint/naming-convention": "off",
     "@typescript-eslint/no-floating-promises": "off",
     "@typescript-eslint/strict-boolean-expressions": "off",
     "react-native/no-inline-styles": "off",
@@ -45,7 +45,7 @@
           "error",
           {
             "groups": [
-              ["^react$","^react-native$", "^expo", "^@gluestack-ui"],
+              ["^react$", "^react-native$", "^expo", "^@gluestack-ui"],
               ["^@"],
               ["^~"],
               ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
@@ -58,5 +58,10 @@
       }
     }
   ],
-  "ignorePatterns": ["node_modules/", "babel.config.js", "metro.config.js", "expo-env.d.ts"]
+  "ignorePatterns": [
+    "node_modules/",
+    "babel.config.js",
+    "metro.config.js",
+    "expo-env.d.ts"
+  ]
 }
