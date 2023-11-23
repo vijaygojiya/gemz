@@ -1,16 +1,17 @@
+import React, { useEffect } from "react";
+import { useColorScheme } from "react-native";
+import { useFonts } from "expo-font";
+import { SplashScreen, Stack } from "expo-router";
+import { config } from "@gluestack-ui/config";
+import { GluestackUIProvider } from "@gluestack-ui/themed";
+
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import React from "react"
 import {
   DarkTheme,
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
-import { useFonts } from "expo-font";
-import { SplashScreen, Stack } from "expo-router";
-import { useEffect } from "react";
-import { useColorScheme } from "react-native";
-import { GluestackUIProvider, Text, Box } from "@gluestack-ui/themed";
-import { config } from "@gluestack-ui/config";
+
 import { AuthProvider } from "../context/AuthProvider";
 
 export {
@@ -57,11 +58,17 @@ function RootLayoutNav() {
     <GluestackUIProvider config={config}>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <AuthProvider>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="insights/[insight]" options={{headerTitle:"", headerTransparent:true}}/>
-          <Stack.Screen name="(auth)/Onboarding" options={{ headerShown: false }} />
-        </Stack>
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="insights/[insight]"
+              options={{ headerTitle: "", headerTransparent: true }}
+            />
+            <Stack.Screen
+              name="(auth)/Onboarding"
+              options={{ headerShown: false }}
+            />
+          </Stack>
         </AuthProvider>
       </ThemeProvider>
     </GluestackUIProvider>

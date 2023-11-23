@@ -1,25 +1,21 @@
-import { StyleSheet } from "react-native";
+import React, { useContext } from "react";
+import { Redirect } from "expo-router";
 import {
-  Box,
-  Center,
-  HStack,
+  Button,
+  ButtonText,
   Heading,
   ScrollView,
   Text,
-  VStack,
   View,
-  Button,
-  ButtonText,
+  VStack,
 } from "@gluestack-ui/themed";
-import { Redirect, Stack } from "expo-router";
-import Header from "../../components/General/Header";
+
 import Listings from "../../components/Main/Overview/Listings";
 import Colors from "../../constants/Colors";
-import { useContext, useEffect } from "react";
 import { AuthContext } from "../../context/AuthProvider";
-import React from "react";
+
 export default function index() {
-  const {authState,logout} = useContext(AuthContext);
+  const { authState, logout } = useContext(AuthContext);
 
   if (authState?.authenticated === false) {
     return <Redirect href={"/(auth)/Onboarding"} />;
@@ -34,7 +30,7 @@ export default function index() {
             justifyContent="space-between"
             alignItems="center"
           >
-            <Button onPress={()=>logout()}>
+            <Button onPress={() => logout()}>
               <ButtonText>Logout</ButtonText>
             </Button>
             <VStack space="none">

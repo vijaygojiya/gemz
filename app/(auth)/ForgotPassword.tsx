@@ -1,28 +1,10 @@
-import {
-  Box,
-  Button,
-  ButtonIcon,
-  ButtonSpinner,
-  ButtonText,
-  Center,
-  ChevronRightIcon,
-  FormControl,
-  Heading,
-  HStack,
-  Input,
-  InputField,
-  InputIcon,
-  InputSlot,
-  Spinner,
-  Text,
-  VStack,
-} from "@gluestack-ui/themed";
-import { User } from "lucide-react-native";
-import React, { useState } from "react";
+import React from "react";
+import { Link } from "expo-router";
+import { Box, Center, Heading, Text, VStack } from "@gluestack-ui/themed";
+
 import Logo from "../../assets/images/logo.svg";
-import { Link, router } from "expo-router";
-import Colors from "../../constants/Colors";
 import ForgotPasswordForm from "../../components/Auth/Form/ForgotPasswordForm";
+import Colors from "../../constants/Colors";
 
 export default function ForgotPassword() {
   return (

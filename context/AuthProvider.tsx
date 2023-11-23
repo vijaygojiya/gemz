@@ -1,7 +1,9 @@
-import React, { createContext, useState, useEffect, useCallback } from "react";
-import { Alert, AppState, AppStateStatus } from "react-native";
-import { decode } from "base-64";
+import React, { createContext, useCallback, useEffect, useState } from "react";
+import { Alert, AppState, type AppStateStatus } from "react-native";
+
 import { useAuthServerMutation } from "../hooks/useMutation";
+
+import { decode } from "base-64";
 
 const AuthContext = createContext<any>(null);
 const { Provider } = AuthContext;
@@ -77,7 +79,7 @@ const AuthProvider = ({ children }: any) => {
 
     const appStateSubscription = AppState.addEventListener(
       "change",
-      handleAppStateChange
+      handleAppStateChange,
     );
 
     return () => {
@@ -86,7 +88,7 @@ const AuthProvider = ({ children }: any) => {
     };
   }, [refresh, authState]);
 
-  const isLoggedIn = Boolean(authState.refreshToken);
+  // const isLoggedIn = Boolean(authState.refreshToken);
 
   useEffect(() => {
     if (authState.accessToken) {
@@ -95,8 +97,8 @@ const AuthProvider = ({ children }: any) => {
           refresh,
           Math.max(
             getTimeoutFromToken(authState.accessToken) - REFRESH_OFFSET,
-            0
-          )
+            0,
+          ),
         );
         return () => {
           clearTimeout(accessTimeout);
@@ -114,10 +116,9 @@ const AuthProvider = ({ children }: any) => {
   useEffect(() => {
     if (authState.refreshToken) {
       try {
-        const refreshTimeout = setTimeout(
-          () => logout("Session expired. Please log in again."),
-          getTimeoutFromToken(authState.refreshToken)
-        );
+        const refreshTimeout = setTimeout(() => {
+          logout("Session expired. Please log in again.");
+        }, getTimeoutFromToken(authState.refreshToken));
         return () => {
           clearTimeout(refreshTimeout);
         };

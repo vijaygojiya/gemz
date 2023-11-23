@@ -1,6 +1,5 @@
-import { useAuthServerMutation } from "../../../hooks/useMutation";
-import buildURLSearchParams from "../../../lib/buildURLSearchParams";
-import { ToastAndroid } from "react-native";
+import React, { useState } from "react";
+import { router } from "expo-router";
 import {
   Button,
   ButtonIcon,
@@ -14,9 +13,11 @@ import {
   InputIcon,
   InputSlot,
 } from "@gluestack-ui/themed";
+
+import { useAuthServerMutation } from "../../../hooks/useMutation";
+import buildURLSearchParams from "../../../lib/buildURLSearchParams";
+
 import { User } from "lucide-react-native";
-import React, { useState } from "react";
-import { router } from "expo-router";
 
 interface IUserArgs {
   username: string;
@@ -48,14 +49,14 @@ const ForgotPasswordForm = () => {
             phone_number: data.phone_number,
             user_id: data.user_id.toString(),
             next_path: "/ResetPassword",
-          })}`
+          })}`,
         );
       }
     },
   });
 
   function validateForm() {
-    let newErrors = {
+    const newErrors = {
       username: "",
     };
     if (!credentials.username) {
@@ -93,7 +94,9 @@ const ForgotPasswordForm = () => {
             value={credentials.username}
             placeholder="Enter Username"
             fontSize="$md"
-            onChangeText={(val: string) => handleChange("username", val)}
+            onChangeText={(val: string) => {
+              handleChange("username", val);
+            }}
           />
         </Input>
       </FormControl>
@@ -104,7 +107,9 @@ const ForgotPasswordForm = () => {
         mt="$10"
         flexDirection="row"
         alignItems="center"
-        onPress={() => handleReset()}
+        onPress={() => {
+          handleReset();
+        }}
         isDisabled={isMutating}
       >
         <HStack space="sm" alignItems="center">

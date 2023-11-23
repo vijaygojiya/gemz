@@ -1,3 +1,6 @@
+import React, { useState } from "react";
+import { ToastAndroid } from "react-native";
+import { Link, router } from "expo-router";
 import {
   Button,
   ButtonIcon,
@@ -13,19 +16,17 @@ import {
   Spinner,
   Text,
 } from "@gluestack-ui/themed";
-import { ToastAndroid } from "react-native";
-import {
-  User,
-  Lock,
-  EyeOffIcon,
-  EyeIcon,
-  ChevronRightIcon,
-} from "lucide-react-native";
-import { useState } from "react";
-import { Link } from "expo-router";
+
 import { useAuthServerMutation } from "../../../hooks/useMutation";
 import buildURLSearchParams from "../../../lib/buildURLSearchParams";
-import { router } from "expo-router";
+
+import {
+  ChevronRightIcon,
+  EyeIcon,
+  EyeOffIcon,
+  Lock,
+  User,
+} from "lucide-react-native";
 interface IUserArgs {
   username: string;
   password: string;
@@ -58,7 +59,7 @@ export default function Login() {
         `/VerifyOTP${buildURLSearchParams({
           phone_number: data.phone_number,
           user_id: data.user_id.toString(),
-          next_path: "(tabs)"
+          next_path: "(tabs)",
         })}`
       );
     },
@@ -69,7 +70,7 @@ export default function Login() {
   }
 
   function validateForm() {
-    let newErrors = {
+    const newErrors = {
       username: "",
       password: "",
     };
@@ -112,7 +113,9 @@ export default function Login() {
             value={credentials.username}
             placeholder="username"
             fontSize="$md"
-            onChangeText={(val: string) => handleChange("username", val)}
+            onChangeText={(val: string) => {
+              handleChange("username", val);
+            }}
           />
         </Input>
         <FormControlError>
@@ -134,7 +137,9 @@ export default function Login() {
             type={showPassword ? "text" : "password"}
             placeholder="password"
             fontSize="$md"
-            onChangeText={(val: string) => handleChange("password", val)}
+            onChangeText={(val: string) => {
+              handleChange("password", val);
+            }}
           />
           <InputSlot pr="$3" onPress={handleVisibility}>
             <InputIcon as={showPassword ? EyeIcon : EyeOffIcon} />

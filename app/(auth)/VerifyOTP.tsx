@@ -1,21 +1,21 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { StyleSheet, TextInput } from "react-native";
+import { router, useLocalSearchParams } from "expo-router";
 import {
   Box,
   Button,
   ButtonText,
   Center,
-  HStack,
   Heading,
+  HStack,
   Text,
   VStack,
 } from "@gluestack-ui/themed";
+
 import OtpIllustration from "../../assets/images/otp-illustration.svg";
-import { Link, router, useLocalSearchParams } from "expo-router";
+import { AuthContext } from "../../context/AuthProvider";
 import { useAuthServerMutation } from "../../hooks/useMutation";
 import buildURLSearchParams from "../../lib/buildURLSearchParams";
-import { save } from "../../lib/secureStorage";
-import { AuthContext } from "../../context/AuthProvider";
 
 const OTP_WAIT_TIME = 60;
 
@@ -24,7 +24,7 @@ export default function VerifyOTP() {
   const [otpValues, setOtpValues] = useState(Array(6).fill("")); // State to store OTP values
   const authContext = useContext(AuthContext);
 
-  const { phone_number, user_id, next_path } = useLocalSearchParams();
+  const { user_id, next_path } = useLocalSearchParams();
 
   const { trigger, isMutating } = useAuthServerMutation<any, any>(
     "/verify-otp",
@@ -41,9 +41,6 @@ export default function VerifyOTP() {
           // })}`
           switch (next_path) {
             case "/ResetPassword": {
-              (async () => {
-                await save("accessToken", access_token);
-              })();
               router.push(
                 `${next_path}${buildURLSearchParams({
                   phone_number: data.phone_number,
@@ -82,7 +79,9 @@ export default function VerifyOTP() {
       setSeconds((prevSeconds) => (prevSeconds > 0 ? prevSeconds - 1 : 0));
     }, 1000);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
 
   const handleInputChange = (index: number, val: string) => {
@@ -126,7 +125,9 @@ export default function VerifyOTP() {
               style={styles.inputView}
               keyboardType="number-pad"
               maxLength={1}
-              onChangeText={(val) => handleInputChange(index, val)}
+              onChangeText={(val) => {
+                handleInputChange(index, val);
+              }}
             />
           ))}
         </HStack>
@@ -145,9 +146,12 @@ export default function VerifyOTP() {
         </Text>
         <Button
           size="lg"
+          isDisabled={isMutating}
           borderRadius="$lg"
           bg="#1890FF"
-          onPress={() => handleSubmit()}
+          onPress={() => {
+            handleSubmit();
+          }}
         >
           <ButtonText>Verify</ButtonText>
         </Button>
@@ -158,12 +162,12 @@ export default function VerifyOTP() {
 
 const styles = StyleSheet.create({
   inputView: {
-    width: 50,
-    height: 50,
-    borderWidth: 2,
     borderRadius: 10,
-    textAlign: "center",
+    borderWidth: 2,
     fontSize: 18,
     fontWeight: "700",
+    height: 50,
+    textAlign: "center",
+    width: 50,
   },
 });

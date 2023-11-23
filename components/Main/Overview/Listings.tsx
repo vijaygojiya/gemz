@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 import {
-  ScrollView,
+  HStack,
   Pressable,
+  ScrollView,
   Text,
   VStack,
-  HStack,
 } from "@gluestack-ui/themed";
+
 import Colors from "../../../constants/Colors";
-import OverviewList from "./OverviewList/OverviewList";
-import Family from "./Family/Family";
-import Vaultz from "./Vaultz/Vaultz";
+import { type TTabType } from "../../../interfaces/Main";
+
 import Analysis from "./Analysis/Analysis";
-import Planning from "./Planning/Planning";
 import Assets from "./Assets/Assets";
-import { TTabType } from "../../../interfaces/Main";
+import Family from "./Family/Family";
+import OverviewList from "./OverviewList/OverviewList";
+import Planning from "./Planning/Planning";
+import Vaultz from "./Vaultz/Vaultz";
 
 const tabsData = [
   {
@@ -69,7 +71,9 @@ export default function Listings() {
               py="$1"
               borderBottomWidth={activeTab === tab.title ? 3 : 0}
               borderColor="$borderLight900"
-              onPress={() => setActiveTab(tab.title)}
+              onPress={() => {
+                setActiveTab(tab.title);
+              }}
             >
               <Text
                 size="sm"

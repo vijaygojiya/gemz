@@ -1,19 +1,18 @@
-import { Redirect, router, Tabs } from "expo-router";
-import {
-  LayoutGridIcon,
-  UploadCloudIcon,
-  SearchIcon,
-  BellIcon,
-} from "lucide-react-native";
+import React from "react";
+import { Tabs } from "expo-router";
+import { Icon } from "@gluestack-ui/themed";
 
 import Colors from "../../constants/Colors";
-import { Icon } from "@gluestack-ui/themed";
-import React from "react";
-import { useContext, useEffect } from "react";
-import { AuthContext } from "../../context/AuthProvider";
+
+import {
+  BellIcon,
+  LayoutGridIcon,
+  SearchIcon,
+  UploadCloudIcon,
+} from "lucide-react-native";
 
 export default function TabLayout() {
-  const authContext = useContext(AuthContext);
+  // const authContext = useContext(AuthContext);
 
   // console.log(isLoggedIn,"Index Logged In")
 

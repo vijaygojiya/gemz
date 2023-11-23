@@ -1,11 +1,6 @@
 import React from "react";
-import {
-  Box,
-  Center,
-  Heading,
-  Text,
-  VStack,
-} from "@gluestack-ui/themed";
+import { Box, Center, Heading, Text, VStack } from "@gluestack-ui/themed";
+
 import Logo from "../../assets/images/logo.svg";
 import LoginForm from "../../components/Auth/Form/LoginForm";
 

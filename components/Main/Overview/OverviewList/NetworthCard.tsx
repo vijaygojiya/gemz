@@ -1,6 +1,7 @@
 import React from "react";
-import { Box, HStack, Heading, Text, VStack, View } from "@gluestack-ui/themed";
 import { StyleSheet } from "react-native";
+import { Heading, HStack, Text, View, VStack } from "@gluestack-ui/themed";
+
 import Colors from "../../../../constants/Colors";
 
 export default function NetWorthCard() {
@@ -13,7 +14,7 @@ export default function NetWorthCard() {
           color={Colors.dark}
           textAlign="center"
         >
-          Krish's family investment
+          Krish&apos;s family investment
         </Heading>
         <HStack space="4xl" justifyContent="center">
           <VStack>
@@ -35,13 +36,13 @@ export default function NetWorthCard() {
 }
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 8,
-    padding: 16,
     backgroundColor: "#fff",
+    borderRadius: 8,
+    elevation: 4,
+    padding: 16,
     shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1, // Adjust opacity to make the shadow lighter
     shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 4,
   },
 });

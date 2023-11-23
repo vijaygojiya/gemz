@@ -1,8 +1,6 @@
 import React from "react";
-import { Text } from "@gluestack-ui/themed"
+import { Text } from "@gluestack-ui/themed";
 
-export default function Notification(){
-    return(
-        <Text>Notifications</Text>
-    )
+export default function Notification() {
+  return <Text>Notifications</Text>;
 }

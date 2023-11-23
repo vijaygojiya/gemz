@@ -1,12 +1,14 @@
-import { HStack, Center, Text } from "@gluestack-ui/themed";
 import React from "react";
-import { TouchableOpacity, StyleSheet } from "react-native";
-import PositionIcon from "../../../../assets/images/Investment.svg"
-import ProfitIcon from "../../../../assets/images/Profit.svg";
-import BankIcon from "../../../../assets/images/bank.svg";
-import TransactionIcon from "../../../../assets/images/Transactions.svg";
-import NetWorthCard from "./NetworthCard";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { Link } from "expo-router";
+import { Center, HStack, Text } from "@gluestack-ui/themed";
+
+import BankIcon from "../../../../assets/images/bank.svg";
+import PositionIcon from "../../../../assets/images/Investment.svg";
+import ProfitIcon from "../../../../assets/images/Profit.svg";
+import TransactionIcon from "../../../../assets/images/Transactions.svg";
+
+import NetWorthCard from "./NetworthCard";
 
 export default function OverviewList() {
   return (
@@ -62,15 +64,15 @@ export default function OverviewList() {
 
 const styles = StyleSheet.create({
   card: {
-    flex: 1,
     alignItems: "center",
-    borderRadius: 8,
-    padding: 16,
     backgroundColor: "#fff",
+    borderRadius: 8,
+    elevation: 4,
+    flex: 1,
+    padding: 16,
     shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1, // Adjust opacity to make the shadow lighter
     shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 4,
   },
 });

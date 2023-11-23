@@ -10,10 +10,10 @@ async function fetcher({ url, init, error }: IFetcherParams) {
       ...init,
       headers: {
         "Accept-Encoding": "gzip",
-      //   {
-      //     "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAwNDg2MTk3LCJpYXQiOjE3MDA0ODI1OTcsImp0aSI6ImQwYzY1MzFmN2VmZTQyNWJhZjVhNTI2OWNkNjM3YzRlIiwidXNlcl9pZCI6NTR9.v9D4yKtBrAZOjn1UwSfby5IgCgtu-dYhepFdypJcErQ",
-      //     "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcwMDU2ODk5NywiaWF0IjoxNzAwNDgyNTk3LCJqdGkiOiIyZTZiMDM4NTYwNTY0ODI0ODYzYmNkYjAzYmZlZTdmZSIsInVzZXJfaWQiOjU0fQ.O-dvBfwNv6I7eEDC7_szjto1qY7koVdpEzbCWH_euIE"
-      // }
+        //   {
+        //     "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAwNDg2MTk3LCJpYXQiOjE3MDA0ODI1OTcsImp0aSI6ImQwYzY1MzFmN2VmZTQyNWJhZjVhNTI2OWNkNjM3YzRlIiwidXNlcl9pZCI6NTR9.v9D4yKtBrAZOjn1UwSfby5IgCgtu-dYhepFdypJcErQ",
+        //     "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcwMDU2ODk5NywiaWF0IjoxNzAwNDgyNTk3LCJqdGkiOiIyZTZiMDM4NTYwNTY0ODI0ODYzYmNkYjAzYmZlZTdmZSIsInVzZXJfaWQiOjU0fQ.O-dvBfwNv6I7eEDC7_szjto1qY7koVdpEzbCWH_euIE"
+        // }
         Authorization: "Token c48ba34430ee8fedb986c15b31cf5e8cbf33acf1",
         // Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAwNDg2MTk3LCJpYXQiOjE3MDA0ODI1OTcsImp0aSI6ImQwYzY1MzFmN2VmZTQyNWJhZjVhNTI2OWNkNjM3YzRlIiwidXNlcl9pZCI6NTR9.v9D4yKtBrAZOjn1UwSfby5IgCgtu-dYhepFdypJcErQ",
         ...init.headers,
@@ -46,7 +46,7 @@ async function fetcher({ url, init, error }: IFetcherParams) {
 
 function formatBody<ExtraArgs>(
   arg: ExtraArgs,
-  payload?: Record<string, string>
+  payload?: Record<string, string>,
 ) {
   if (arg) {
     return JSON.stringify(arg);
@@ -58,12 +58,12 @@ function formatBody<ExtraArgs>(
 }
 
 export function postJsonFetcher(baseURL: string) {
-  return <ExtraArgs>(
+  return async <ExtraArgs>(
     key: string | [string, Record<string, string>],
-    options?: Readonly<{ arg: ExtraArgs }>
+    options?: Readonly<{ arg: ExtraArgs }>,
   ) => {
     const isArray = Array.isArray(key);
-    return fetcher({
+    return await fetcher({
       url: baseURL + (isArray ? key[0] : key),
       init: {
         method: "POST",
@@ -78,15 +78,15 @@ export function postJsonFetcher(baseURL: string) {
 }
 
 export function getFetcher(baseURL: string) {
-    return (key: string | [string, string]) =>
-      fetcher({
-        url: baseURL + (Array.isArray(key) ? key[0] : key),
-        init: {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+  return async (key: string | [string, string]) =>
+    await fetcher({
+      url: baseURL + (Array.isArray(key) ? key[0] : key),
+      init: {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
         },
-        error: "An error occurred while getting the data.",
-      });
-  }
+      },
+      error: "An error occurred while getting the data.",
+    });
+}

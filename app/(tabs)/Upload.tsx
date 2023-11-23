@@ -1,11 +1,11 @@
-import { StyleSheet, Modal, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import {
   Actionsheet,
   ActionsheetBackdrop,
   ActionsheetContent,
   Box,
   Button,
-  ButtonIcon,
   ButtonText,
   Fab,
   FabIcon,
@@ -17,13 +17,11 @@ import {
   RadioLabel,
   ScrollView,
   Text,
-  VStack,
   View,
+  VStack,
 } from "@gluestack-ui/themed";
+
 import { CircleIcon, PlusIcon } from "lucide-react-native";
-import { useState } from "react";
-import { Link } from "expo-router";
-import DateTimePicker from '@react-native-community/datetimepicker';
 
 interface Item {
   id: number;
@@ -55,10 +53,10 @@ export default function Upload() {
   const [showActionsheet, setShowActionsheet] = useState(false);
   const [selectedItem, setSelectedItem] = useState<number | null>(null);
   const [values, setValues] = useState("Position");
-  const [date, setDate] = useState(new Date());
-  const [showPicker, setShowPicker] = useState(false);
 
-  const handleClose = () => setShowActionsheet(!showActionsheet);
+  const handleClose = () => {
+    setShowActionsheet(!showActionsheet);
+  };
 
   const custodians = [
     { id: 1, label: "Item 1" },
@@ -124,7 +122,9 @@ export default function Upload() {
                         key={item.id}
                         item={item}
                         selected={item.id === selectedItem}
-                        onSelect={() => handleSelectItem(item)}
+                        onSelect={() => {
+                          handleSelectItem(item);
+                        }}
                       />
                     ))}
                   </HStack>
@@ -137,7 +137,9 @@ export default function Upload() {
                         key={item.id}
                         item={item}
                         selected={item.id === selectedItem}
-                        onSelect={() => handleSelectItem(item)}
+                        onSelect={() => {
+                          handleSelectItem(item);
+                        }}
                       />
                     ))}
                   </HStack>
@@ -197,11 +199,11 @@ export default function Upload() {
 
 const styles = StyleSheet.create({
   card: {
-    height: "85%",
     backgroundColor: "white",
     borderRadius: 10,
-    padding: 16,
     elevation: 2,
+    height: "85%",
+    padding: 16,
     shadowColor: "rgba(0, 0, 0, 0.24)",
     shadowOffset: {
       width: 0,

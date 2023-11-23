@@ -1,3 +1,5 @@
+import React, { useState } from "react";
+import { router } from "expo-router";
 import {
   Box,
   Button,
@@ -16,16 +18,14 @@ import {
   InputSlot,
   VStack,
 } from "@gluestack-ui/themed";
-import { Lock } from "lucide-react-native";
-import React, { useState } from "react";
+
 import Logo from "../../assets/images/logo.svg";
-import { Link, router, useLocalSearchParams } from "expo-router";
 import { useAuthServerMutation } from "../../hooks/useMutation";
-import { useSWRConfig } from "swr";
+
+import { Lock } from "lucide-react-native";
 
 export default function ResetPassword() {
   const [showPassword, setShowPassword] = useState(false);
-  const {access_token}= useLocalSearchParams()
   const [credentials, setCredentials] = useState({
     new_password: "",
     confirm_new_password: "",
@@ -35,20 +35,18 @@ export default function ResetPassword() {
     confirm_new_password: "",
   });
 
-  const { trigger, isMutating } = useAuthServerMutation<any, any>("/reset-password", 
-  {
-    onSuccess: () => {
-      console.log("Login KAro")
-      router.push("/(auth)/Login");
-    },
-    onError:(data)=>{
-        console.log(data.stack)
+  const { trigger, isMutating } = useAuthServerMutation<any, any>(
+    "/reset-password",
+    {
+      onSuccess: () => {
+        console.log("Login KAro");
+        router.push("/(auth)/Login");
+      },
+      onError: (data) => {
+        console.log(data.stack);
+      },
     }
-  },
   );
-
-  
- 
 
   function handleVisibility() {
     setShowPassword(!showPassword);
@@ -62,7 +60,7 @@ export default function ResetPassword() {
   }
 
   function validateForm() {
-    let newErrors = {
+    const newErrors = {
       password: "",
       confirmPassword: "",
     };
@@ -79,7 +77,7 @@ export default function ResetPassword() {
   const handleReset = () => {
     if (validateForm()) {
       trigger({
-        new_password: credentials.confirm_new_password
+        new_password: credentials.confirm_new_password,
       });
     }
   };
@@ -89,7 +87,7 @@ export default function ResetPassword() {
         <Logo />
       </Center>
       <VStack space="3xl" reversed={false} mt="$20">
-        <FormControl >
+        <FormControl>
           <FormControlLabel mb="$1">
             <FormControlLabelText>Enter new password</FormControlLabelText>
           </FormControlLabel>
@@ -107,7 +105,9 @@ export default function ResetPassword() {
               placeholder="password"
               fontSize="$md"
               value={credentials.new_password}
-              onChangeText={(val: string) => handleChange("new_password", val)}
+              onChangeText={(val: string) => {
+                handleChange("new_password", val);
+              }}
             />
             <InputSlot pr="$3" onPress={handleVisibility}>
               <InputIcon as={showPassword ? EyeIcon : EyeOffIcon} />
@@ -132,9 +132,9 @@ export default function ResetPassword() {
               placeholder="Confirm password"
               fontSize="$md"
               value={credentials.confirm_new_password}
-              onChangeText={(val: string) =>
-                handleChange("confirm_new_password", val)
-              }
+              onChangeText={(val: string) => {
+                handleChange("confirm_new_password", val);
+              }}
             />
             <InputSlot pr="$3" onPress={handleVisibility}>
               <InputIcon as={showPassword ? EyeIcon : EyeOffIcon} />
@@ -150,7 +150,9 @@ export default function ResetPassword() {
         mt="$10"
         flexDirection="row"
         alignItems="center"
-        onPress={() => handleReset()}
+        onPress={() => {
+          handleReset();
+        }}
         disabled={isMutating}
       >
         <ButtonText>Proceed</ButtonText>
