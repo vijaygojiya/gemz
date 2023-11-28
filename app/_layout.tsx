@@ -65,6 +65,14 @@ function RootLayoutNav() {
             />
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             <Stack.Screen
+              name="(modals)/AddEstateModal"
+              options={{ presentation: "modal", title: "Add Estate" }}
+            />
+            <Stack.Screen
+              name="(modals)/AddGoalModal"
+              options={{ presentation: "modal", title: "Add Goal" }}
+            />
+            <Stack.Screen
               name="insights/[insight]"
               options={{ headerTitle: "", headerTransparent: true }}
             />
