@@ -59,14 +59,14 @@ function RootLayoutNav() {
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <AuthProvider>
           <Stack>
+            <Stack.Screen
+              name="(auth)/Onboarding"
+              options={{ headerShown: false }}
+            />
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             <Stack.Screen
               name="insights/[insight]"
               options={{ headerTitle: "", headerTransparent: true }}
-            />
-            <Stack.Screen
-              name="(auth)/Onboarding"
-              options={{ headerShown: false }}
             />
           </Stack>
         </AuthProvider>

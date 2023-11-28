@@ -39,11 +39,9 @@ export default function ResetPassword() {
     "/reset-password",
     {
       onSuccess: () => {
-        console.log("Login KAro");
         router.push("/(auth)/Login");
       },
       onError: (data) => {
-        console.log(data.stack);
       },
     },
   );

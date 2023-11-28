@@ -31,7 +31,6 @@ export default function VerifyOTP() {
     {
       onSuccess(data) {
         const { access_token, refresh_token } = data;
-        console.log("Credentials Keys : ", access_token, refresh_token);
         if (access_token && refresh_token) {
           // ToastAndroid.show("OTP Send", ToastAndroid.SHORT);
           // ${buildURLSearchParams({
@@ -57,6 +56,9 @@ export default function VerifyOTP() {
                   authenticated: true,
                   accessToken: access_token,
                 });
+                authContext.saveTokenToSecureStore("accessToken",access_token)
+                authContext.saveTokenToSecureStore("refreshToken",access_token)
+
               })();
               router.push(next_path as any);
               break;
