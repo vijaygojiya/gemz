@@ -81,21 +81,15 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         gap: 16,
     },
-    item: {
-        flex: 1,
+    itemContainer: {
+        padding: 12,
     },
     label: {
         fontSize: 14,
         fontWeight: "bold",
     },
-    itemContainer: {
-        padding: 12,
-    },
     value: {
         fontSize: 12,
-    },
-    badge: {
-        padding: 12
     },
     items: {
         flexDirection: "row",

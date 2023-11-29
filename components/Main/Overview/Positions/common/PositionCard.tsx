@@ -1,3 +1,4 @@
+import React from "react"
 import Colors from "../../../../../constants/Colors";
 import { IPositionsCard } from "../Positions";
 import { HStack, Text, VStack } from "@gluestack-ui/themed";

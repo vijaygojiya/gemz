@@ -1,6 +1,5 @@
 import React from 'react'
 import { FlatList } from "@gluestack-ui/themed";
-import EstateCard from '../../Planning/common/EstateCard';
 import VaultsCard from './VaultsCard';
 
 const vaultzData= [
