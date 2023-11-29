@@ -33,7 +33,7 @@ export default function GoalCard({ data }: IGoalCardProps) {
             onPress={() => {
               Alert.alert(
                 "Delete Goal",
-                "Are you sure you want to delete this goal?"
+                "Are you sure you want to delete this goal?",
               );
             }}
           >

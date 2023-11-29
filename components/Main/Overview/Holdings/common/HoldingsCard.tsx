@@ -1,23 +1,22 @@
 import React from "react";
-import { Alert, StyleSheet } from "react-native";
+import { Alert, StyleSheet, TouchableOpacity } from "react-native";
 import { Divider, HStack, Icon, Text, VStack } from "@gluestack-ui/themed";
 
-import { type IEstateCard } from "../Planning";
+import { type IHoldingsCard } from "../Holdings";
 
 import { Edit, Trash } from "lucide-react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
-interface IEstateCardProps {
-  data: IEstateCard;
+interface IHoldingsProps {
+  data: IHoldingsCard;
 }
 
-export default function EstateCard({ data }: IEstateCardProps) {
-  const { name, relationship, email, dob, phoneNumber, sharePercentage } = data;
-
+export default function HoldingsCard({ data }: IHoldingsProps) {
+  const { name, account_number, account_type, relationship_number, currency } =
+    data;
   return (
     <VStack style={styles.card}>
       <HStack style={styles.headerContainer}>
-        <Text style={styles.headerText}>Beneficiary Person - Villa</Text>
+        <Text style={styles.headerText}>{name}</Text>
         <HStack style={styles.iconContainer}>
           <TouchableOpacity>
             <Icon as={Edit} />
@@ -38,32 +37,22 @@ export default function EstateCard({ data }: IEstateCardProps) {
       <VStack style={styles.itemContainer} space="md">
         <HStack>
           <VStack style={styles.item}>
-            <Text style={styles.label}>Name</Text>
-            <Text style={styles.value}>{name}</Text>
+            <Text style={styles.label}>Account Number</Text>
+            <Text style={styles.value}>{account_number}</Text>
           </VStack>
           <VStack style={styles.item}>
-            <Text style={styles.label}>Relationship</Text>
-            <Text style={styles.value}>{relationship}</Text>
-          </VStack>
-        </HStack>
-        <HStack>
-          <VStack style={styles.item}>
-            <Text style={styles.label}>Email</Text>
-            <Text style={styles.value}>{email}</Text>
-          </VStack>
-          <VStack style={styles.item}>
-            <Text style={styles.label}>DOB</Text>
-            <Text style={styles.value}>{dob}</Text>
+            <Text style={styles.label}>Account Type</Text>
+            <Text style={styles.value}>{account_type}</Text>
           </VStack>
         </HStack>
         <HStack>
           <VStack style={styles.item}>
-            <Text style={styles.label}>Phone Number</Text>
-            <Text style={styles.value}>{phoneNumber}</Text>
+            <Text style={styles.label}>Relationship Number</Text>
+            <Text style={styles.value}>{relationship_number}</Text>
           </VStack>
           <VStack style={styles.item}>
-            <Text style={styles.label}>Share Percentage</Text>
-            <Text style={styles.value}>{sharePercentage}%</Text>
+            <Text style={styles.label}>Currency</Text>
+            <Text style={styles.value}>{currency}</Text>
           </VStack>
         </HStack>
       </VStack>
