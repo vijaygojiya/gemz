@@ -1,8 +1,6 @@
-import React from "react"
-import { Text } from "@gluestack-ui/themed"
+import React from "react";
+import { Text } from "@gluestack-ui/themed";
 
-export default function Transactions(){
-    return(
-        <Text>Transactions</Text>
-    )
+export default function Transactions() {
+  return <Text>Transactions</Text>;
 }

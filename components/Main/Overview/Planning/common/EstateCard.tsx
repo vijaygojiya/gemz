@@ -26,7 +26,7 @@ export default function EstateCard({ data }: IEstateCardProps) {
             onPress={() => {
               Alert.alert(
                 "Delete Estate",
-                "Are you sure you want to delete this estate?"
+                "Are you sure you want to delete this estate?",
               );
             }}
           >

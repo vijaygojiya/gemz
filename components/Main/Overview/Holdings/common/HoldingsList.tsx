@@ -1,5 +1,8 @@
+import React from "react";
 import { FlatList } from "@gluestack-ui/themed";
-import { IHoldingsCard } from "../Holdings";
+
+import { type IHoldingsCard } from "../Holdings";
+
 import HoldingsCard from "./HoldingsCard";
 
 const holdingsData: IHoldingsCard[] = [

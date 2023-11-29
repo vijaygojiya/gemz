@@ -1,6 +1,9 @@
+import React from "react";
 import { Alert, StyleSheet, TouchableOpacity } from "react-native";
-import { IHoldingsCard } from "../Holdings";
-import { VStack, HStack, Icon, Divider, Text } from "@gluestack-ui/themed";
+import { Divider, HStack, Icon, Text, VStack } from "@gluestack-ui/themed";
+
+import { type IHoldingsCard } from "../Holdings";
+
 import { Edit, Trash } from "lucide-react-native";
 
 interface IHoldingsProps {
@@ -22,7 +25,7 @@ export default function HoldingsCard({ data }: IHoldingsProps) {
             onPress={() => {
               Alert.alert(
                 "Delete Estate",
-                "Are you sure you want to delete this estate?"
+                "Are you sure you want to delete this estate?",
               );
             }}
           >

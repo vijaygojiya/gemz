@@ -1,11 +1,12 @@
 import React from "react";
-import { ScrollView, VStack, View } from "@gluestack-ui/themed";
 import { useLocalSearchParams } from "expo-router";
-import { TInsights } from "../../interfaces/Main";
-import Positions from "../../components/Main/Overview/Positions/Positions";
+import { ScrollView, View, VStack } from "@gluestack-ui/themed";
+
 import Holdings from "../../components/Main/Overview/Holdings/Holdings";
 import Performers from "../../components/Main/Overview/Performers/Performers";
+import Positions from "../../components/Main/Overview/Positions/Positions";
 import Transactions from "../../components/Main/Overview/Transactions/Transactions";
+import { type TInsights } from "../../interfaces/Main";
 
 function List(type: TInsights): React.ReactNode {
   switch (type) {

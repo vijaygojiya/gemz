@@ -1,7 +1,8 @@
 import React from "react";
-import { Button, Text, VStack } from "@gluestack-ui/themed";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { router } from "expo-router";
+import { Button, Text, VStack } from "@gluestack-ui/themed";
+
 import HoldingsList from "./common/HoldingsList";
 
 export interface IHoldingsCard {

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Text, VStack } from "@gluestack-ui/themed";
 import { SafeAreaView } from "react-native";
-import PerformerSwitch from "./common/PerformerSwitch";
+import { Text, VStack } from "@gluestack-ui/themed";
+
 import PerformerList from "./common/PerformerList";
+import PerformerSwitch from "./common/PerformerSwitch";
 
 export interface IPerformerCard {
   id: number;

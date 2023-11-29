@@ -1,7 +1,7 @@
 import React from "react";
 import { FlatList } from "@gluestack-ui/themed";
 
-import { IPerformerCard } from "../Performers";
+import { type IPerformerCard } from "../Performers";
 
 import PerformerCard from "./PerformerCard";
 

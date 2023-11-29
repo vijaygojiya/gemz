@@ -73,6 +73,26 @@ function RootLayoutNav() {
               options={{ presentation: "modal", title: "Add Goal" }}
             />
             <Stack.Screen
+              name="profile/Profile"
+              options={{ headerTitle: "Profile", headerTransparent: false }}
+            />
+            <Stack.Screen
+              name="profile/AccountDetail"
+              options={{ headerTitle: "Account Details" }}
+            />
+            <Stack.Screen
+              name="profile/Settings"
+              options={{ headerTitle: "Settings" }}
+            />
+            <Stack.Screen
+              name="profile/HelpSupport"
+              options={{ headerTitle: "Help & Support" }}
+            />
+            <Stack.Screen
+              name="profile/TermsCondition"
+              options={{ headerTitle: "Terms & Condition" }}
+            />
+            <Stack.Screen
               name="(modals)/AddHoldingsAccountModal"
               options={{ presentation: "modal", title: "Add Holdings Account" }}
             />

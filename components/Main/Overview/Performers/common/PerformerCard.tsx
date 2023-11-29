@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { Divider, HStack, Text, VStack } from "@gluestack-ui/themed";
 
-import { IPerformerCard } from "../Performers";
+import { type IPerformerCard } from "../Performers";
 
 interface IPerformerCardProps {
   data: IPerformerCard;

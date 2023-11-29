@@ -1,4 +1,6 @@
 import React from "react";
+import { Text } from "@gluestack-ui/themed";
+
 import { Heading, VStack, Text } from "@gluestack-ui/themed";
 import { SafeAreaView } from "react-native";
 import Colors from "../../../../constants/Colors";
