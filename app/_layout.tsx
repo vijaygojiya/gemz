@@ -73,6 +73,10 @@ function RootLayoutNav() {
               options={{ presentation: "modal", title: "Add Goal" }}
             />
             <Stack.Screen
+              name="(modals)/AddHoldingsAccountModal"
+              options={{ presentation: "modal", title: "Add Holdings Account" }}
+            />
+            <Stack.Screen
               name="insights/[insight]"
               options={{ headerTitle: "", headerTransparent: true }}
             />
