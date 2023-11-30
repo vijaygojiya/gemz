@@ -1,8 +1,9 @@
-import React from "react"
-import Colors from "../../../../../constants/Colors";
-import { IPositionsCard } from "../Positions";
-import { HStack, Text, VStack } from "@gluestack-ui/themed";
+import React from "react";
 import { StyleSheet } from "react-native";
+import { HStack, Text, VStack } from "@gluestack-ui/themed";
+
+import Colors from "../../../../../constants/Colors";
+import { type IPositionsCard } from "../Positions";
 
 interface IPositionCardProps {
   data: IPositionsCard;
@@ -41,11 +42,11 @@ const styles = StyleSheet.create({
     elevation: 4,
     marginHorizontal: 4,
     marginVertical: 8,
+    padding: 12,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    padding: 12,
   },
   item: {
     flex: 1,

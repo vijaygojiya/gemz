@@ -1,9 +1,9 @@
 import React from "react";
-import { Text } from "@gluestack-ui/themed";
-
-import { Heading, VStack, Text } from "@gluestack-ui/themed";
 import { SafeAreaView } from "react-native";
+import { Heading, Text, VStack } from "@gluestack-ui/themed";
+
 import Colors from "../../../../constants/Colors";
+
 import PositionList from "./common/PositionList";
 
 export interface IPositionsCard {

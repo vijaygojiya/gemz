@@ -1,6 +1,8 @@
-import React from "react"
-import { IPositionsCard } from "../Positions";
+import React from "react";
 import { FlatList } from "@gluestack-ui/themed";
+
+import { type IPositionsCard } from "../Positions";
+
 import PositionCard from "./PositionCard";
 
 const positionsData: IPositionsCard[] = [

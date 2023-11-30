@@ -2,13 +2,11 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { HStack, Text } from "@gluestack-ui/themed";
 
-
 interface IHeader {
   heading: string;
 }
 
 export default function Header({ heading }: IHeader) {
-
   return (
     <HStack style={styles.headerContainer}>
       <Text style={styles.title}>{heading}</Text>
