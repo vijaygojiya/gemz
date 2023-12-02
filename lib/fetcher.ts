@@ -63,14 +63,18 @@ export function postJsonFetcher(baseURL: string) {
     options?: Readonly<{ arg: ExtraArgs }>,
   ) => {
     const isArray = Array.isArray(key);
+    const url = baseURL + (isArray ? key[0] : key)
+    const body = formatBody(options?.arg, isArray ? key[1] : undefined)
+    console.log("url",url)
+    console.log("body",body)
     return await fetcher({
-      url: baseURL + (isArray ? key[0] : key),
+      url,
       init: {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: formatBody(options?.arg, isArray ? key[1] : undefined),
+        body,
       },
       error: "An error occurred while posting the data.",
     });

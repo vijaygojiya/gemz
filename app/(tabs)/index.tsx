@@ -33,7 +33,7 @@ export default function index() {
   }, []);
 
   return (
-    <View bg="#fff" height="100%">
+    <View bg="#fff0f0" height="100%">
       <ScrollView>
         <VStack space="2xl" mt="$10" py="$5" px="$3">
           <HStack>
