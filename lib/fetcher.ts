@@ -82,8 +82,8 @@ export function postJsonFetcher(baseURL: string) {
 }
 
 export function getFetcher(baseURL: string) {
-  return async (key: string | [string, string]) =>
-    await fetcher({
+  return async (key: string | [string, string]) => {
+    return await fetcher({
       url: baseURL + (Array.isArray(key) ? key[0] : key),
       init: {
         method: "GET",
@@ -93,4 +93,5 @@ export function getFetcher(baseURL: string) {
       },
       error: "An error occurred while getting the data.",
     });
+  };
 }
