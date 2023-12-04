@@ -1,35 +1,74 @@
 import React from "react";
 import { Alert, StyleSheet } from "react-native";
+import { router } from "expo-router";
 import { Divider, HStack, Icon, Text, VStack } from "@gluestack-ui/themed";
 
-import { type IEstateCard } from "../Planning";
+import { useTransactionServerDeleteMutation } from "../../../../../hooks/useMutation";
+import buildURLSearchParams from "../../../../../lib/buildURLSearchParams";
+import revalidate from "../../../../../lib/revalidate";
+
+import { type IEstate } from "./EstateList";
 
 import { Edit, Trash } from "lucide-react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 interface IEstateCardProps {
-  data: IEstateCard;
+  data: IEstate;
+}
+const URLs = {
+  delete: "/estate/{id}/",
+};
+
+function useEstateDelete(id: string) {
+  const { trigger } = useTransactionServerDeleteMutation(
+    URLs.delete.replace("{id}", id),
+    {
+      onSuccess(data) {
+        console.log("Goal deleted successfully", data);
+        revalidate("/estate/");
+      },
+      onError(error, key, config) {
+        console.log("Error deleting goal", error, key, config);
+      },
+    },
+  );
+  return { trigger };
 }
 
 export default function EstateCard({ data }: IEstateCardProps) {
-  const { name, relationship, email, dob, phoneNumber, sharePercentage } = data;
-
+  const { id, name, relationship, email, date_of_birth, phone, percent_share } =
+    data;
+  const { trigger: deleteEstate } = useEstateDelete(id);
+  const handleEdit = (id: string) => {
+    router.push(`/AddEstateModal${buildURLSearchParams({ id })}`);
+  };
+  const onDeletePress = () => {
+    Alert.alert("Delete Goal", "Are you sure you want to delete this goal?", [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      {
+        text: "Delete",
+        onPress: () => {
+          deleteEstate();
+        },
+      },
+    ]);
+  };
   return (
     <VStack style={styles.card}>
       <HStack style={styles.headerContainer}>
         <Text style={styles.headerText}>Beneficiary Person - Villa</Text>
         <HStack style={styles.iconContainer}>
-          <TouchableOpacity>
-            <Icon as={Edit} />
-          </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              Alert.alert(
-                "Delete Estate",
-                "Are you sure you want to delete this estate?",
-              );
+              handleEdit(id);
             }}
           >
+            <Icon as={Edit} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onDeletePress}>
             <Icon as={Trash} />
           </TouchableOpacity>
         </HStack>
@@ -53,17 +92,17 @@ export default function EstateCard({ data }: IEstateCardProps) {
           </VStack>
           <VStack style={styles.item}>
             <Text style={styles.label}>DOB</Text>
-            <Text style={styles.value}>{dob}</Text>
+            <Text style={styles.value}>{date_of_birth}</Text>
           </VStack>
         </HStack>
         <HStack>
           <VStack style={styles.item}>
             <Text style={styles.label}>Phone Number</Text>
-            <Text style={styles.value}>{phoneNumber}</Text>
+            <Text style={styles.value}>{phone}</Text>
           </VStack>
           <VStack style={styles.item}>
             <Text style={styles.label}>Share Percentage</Text>
-            <Text style={styles.value}>{sharePercentage}%</Text>
+            <Text style={styles.value}>{percent_share}%</Text>
           </VStack>
         </HStack>
       </VStack>

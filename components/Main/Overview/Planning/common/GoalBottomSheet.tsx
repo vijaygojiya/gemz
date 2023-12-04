@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import { router } from "expo-router";
 import {
   Actionsheet,
   ActionsheetBackdrop,
@@ -15,7 +16,30 @@ import {
   VStack,
 } from "@gluestack-ui/themed";
 
-const Goals = ["Emergency Fund", "Car", "Vacation", "Home Purchase", "Other"];
+import buildURLSearchParams from "../../../../../lib/buildURLSearchParams";
+
+const Goals = [
+  {
+    id: 1,
+    name: "Emergency Fund",
+  },
+  {
+    id: 2,
+    name: "Car",
+  },
+  {
+    id: 3,
+    name: "Vacation",
+  },
+  {
+    id: 4,
+    name: "Home Purchase",
+  },
+  {
+    id: 5,
+    name: "Other",
+  },
+];
 
 interface IGoalBottomSheetProps {
   isOpen: boolean;
@@ -28,6 +52,11 @@ export default function GoalBottomSheet({
   handleModalClose,
   handleGoalButtonPress,
 }: IGoalBottomSheetProps) {
+  const handleBadgePress = (goal: string) => {
+    console.log("Goal: ", goal);
+    handleModalClose();
+    router.push(`/AddGoalModal${buildURLSearchParams({ goal })}`);
+  };
   return (
     <Actionsheet isOpen={isOpen} onClose={handleModalClose}>
       <ActionsheetBackdrop />
@@ -45,9 +74,16 @@ export default function GoalBottomSheet({
           <HStack space="md" style={styles.badgeContainer}>
             {Goals.map((goal) => {
               return (
-                <Badge style={styles.goalBadge} key={goal}>
-                  <BadgeText>{goal}</BadgeText>
-                </Badge>
+                <TouchableOpacity
+                  key={goal.id}
+                  onPress={() => {
+                    handleBadgePress(goal.name);
+                  }}
+                >
+                  <Badge style={styles.goalBadge}>
+                    <BadgeText>{goal.name}</BadgeText>
+                  </Badge>
+                </TouchableOpacity>
               );
             })}
           </HStack>

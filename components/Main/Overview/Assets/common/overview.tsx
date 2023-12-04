@@ -18,7 +18,7 @@ export const Overview = () => {
       onError: (_data) => {
         console.log("Error calling API", _data);
       },
-    }
+    },
   );
 
   useEffect(() => {

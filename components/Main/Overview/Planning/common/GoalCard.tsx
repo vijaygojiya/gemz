@@ -1,5 +1,6 @@
 import React from "react";
 import { Alert, StyleSheet, TouchableOpacity } from "react-native";
+import { router } from "expo-router";
 import {
   Badge,
   BadgeText,
@@ -10,31 +11,83 @@ import {
   VStack,
 } from "@gluestack-ui/themed";
 
-import { type IGoalCard } from "../Planning";
+import { useTransactionServerDeleteMutation } from "../../../../../hooks/useMutation";
+import buildURLSearchParams from "../../../../../lib/buildURLSearchParams";
+import revalidate from "../../../../../lib/revalidate";
+
+import { type IGoals } from "./GoalList";
 
 import { Edit, Trash } from "lucide-react-native";
 
 interface IGoalCardProps {
-  data: IGoalCard;
+  data: IGoals;
+}
+
+const URLs = {
+  delete: "/goals/{id}/",
+};
+
+function useGoalDelete(id: string) {
+  const { trigger } = useTransactionServerDeleteMutation(
+    URLs.delete.replace("{id}", id),
+    {
+      onSuccess(data) {
+        console.log("Goal deleted successfully", data);
+        revalidate("/goals/");
+      },
+      onError(error, key, config) {
+        console.log("Error deleting goal", error, key, config);
+      },
+    },
+  );
+  return { trigger };
 }
 
 export default function GoalCard({ data }: IGoalCardProps) {
-  const { name, assetClassPreference, investmentHorizon, returnExpectations } =
-    data;
+  const {
+    id,
+    asset_class_preference,
+    name,
+    investment_horizon,
+    return_expectations,
+  } = data;
+
+  const { trigger: deleteGoal } = useGoalDelete(id);
+
+  const onEditPress = (id: string) => {
+    router.push(`/AddGoalModal${buildURLSearchParams({ id })}`);
+  };
+
+  const onDeletePress = () => {
+    Alert.alert("Delete Goal", "Are you sure you want to delete this goal?", [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      {
+        text: "Delete",
+        onPress: () => {
+          deleteGoal();
+        },
+      },
+    ]);
+  };
+
   return (
     <VStack style={styles.goalCard}>
       <HStack style={styles.headerContainer}>
         <Text style={styles.headerText}>{name}</Text>
         <HStack style={styles.iconContainer}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              onEditPress(id);
+            }}
+          >
             <Icon as={Edit} />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              Alert.alert(
-                "Delete Goal",
-                "Are you sure you want to delete this goal?",
-              );
+              onDeletePress();
             }}
           >
             <Icon as={Trash} />
@@ -45,7 +98,7 @@ export default function GoalCard({ data }: IGoalCardProps) {
       <VStack space="sm" style={styles.assetClassContainer}>
         <Text style={styles.label}>Asset Class</Text>
         <HStack space="md">
-          {assetClassPreference.map((assetClass) => {
+          {asset_class_preference.map((assetClass) => {
             return (
               <Badge key={assetClass}>
                 <BadgeText style={styles.value}>{assetClass}</BadgeText>
@@ -57,12 +110,12 @@ export default function GoalCard({ data }: IGoalCardProps) {
       <Divider my="$0.5" />
       <VStack style={styles.container}>
         <Text style={styles.label}>Investment Horizon</Text>
-        <Text style={styles.value}>{investmentHorizon}</Text>
+        <Text style={styles.value}>{investment_horizon}</Text>
       </VStack>
       <Divider my="$0.5" />
       <VStack style={styles.container}>
         <Text style={styles.label}>Return Expectations</Text>
-        <Text style={styles.value}>{returnExpectations}</Text>
+        <Text style={styles.value}>{return_expectations}</Text>
       </VStack>
     </VStack>
   );

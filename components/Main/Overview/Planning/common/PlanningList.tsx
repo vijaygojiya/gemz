@@ -1,7 +1,8 @@
 import React from "react";
-import { FlatList } from "@gluestack-ui/themed";
+import { FlatList, Spinner } from "@gluestack-ui/themed";
 
-import { type IEstateCard, type IGoalCard } from "../Planning";
+import { useTransactionServerQuery } from "../../../../../hooks/useQuery";
+import buildURLSearchParams from "../../../../../lib/buildURLSearchParams";
 
 import EstateCard from "./EstateCard";
 import GoalCard from "./GoalCard";
@@ -9,77 +10,81 @@ import GoalCard from "./GoalCard";
 interface IPlanningListProps {
   selectedTab: number;
 }
-const estateData: IEstateCard[] = [
-  {
-    id: 1,
-    name: "John Doe",
-    relationship: "Father",
-    email: "john@gmail.com",
-    dob: "01/01/1990",
-    phoneNumber: "+65 12345678",
-    sharePercentage: "50",
-  },
-  {
-    id: 2,
-    name: "John Doe",
-    relationship: "Father",
-    email: "john@gmail.com",
-    dob: "01/01/1990",
-    phoneNumber: "+65 12345678",
-    sharePercentage: "50",
-  },
-  {
-    id: 3,
-    name: "John Doe",
-    relationship: "Father",
-    email: "john@gmail.com",
-    dob: "01/01/1990",
-    phoneNumber: "+65 12345678",
-    sharePercentage: "50",
-  },
-];
 
-const goalData: IGoalCard[] = [
-  {
-    id: 1,
-    name: "Retirement",
-    assetClassPreference: ["Stocks", "Bonds", "Real Estate"],
-    investmentHorizon: 20,
-    returnExpectations: "Moderate",
-  },
-  {
-    id: 2,
-    name: "Education Fund",
-    assetClassPreference: ["Bonds", "Savings", "ETFs"],
-    investmentHorizon: 15,
-    returnExpectations: "Conservative",
-  },
-  {
-    id: 3,
-    name: "Travel",
-    assetClassPreference: ["Stocks", "Real Estate", "Cryptocurrency"],
-    investmentHorizon: 5,
-    returnExpectations: "Aggressive",
-  },
-];
+const AssetClassMap = {
+  equity: "Equity",
+  fixed_income: "Fixed Income",
+  cash: "Cash",
+  alternative: "Alternative",
+};
+
+const ReturnExpectationsMap = {
+  high: "High",
+  medium: "Medium",
+  low: "Low",
+};
+
+type TAssetClassType = keyof typeof AssetClassMap | undefined;
+
+export interface TGoalsType {
+  id: string;
+  name: string;
+  asset_class_preference: TAssetClassType[];
+  holding_period: string;
+  investment_horizon: string;
+  liquidity_needs: string;
+  return_expectations: keyof typeof ReturnExpectationsMap | undefined;
+}
+
+const BenificiaryMap = {
+  nominee: "Nominee",
+  beneficiary_person: "Beneficiary Person",
+  beneficiary_trust: "Beneficiary Trust",
+};
+
+type TBeneficaryType = keyof typeof BenificiaryMap;
+
+export interface TEstate {
+  id: string;
+  type: TBeneficaryType;
+  name: string;
+  email: string;
+  phone: string;
+  date_of_birth: string;
+  relationship: string;
+  percent_share: string;
+}
 
 export default function PlanningList({ selectedTab }: IPlanningListProps) {
+  const client_id = "637fbb50-d59d-467d-b61d-f99aa897b960";
   if (selectedTab === 0) {
+    const url = `/goals/${buildURLSearchParams({ client_id })}`;
+    const { data, isLoading } = useTransactionServerQuery<TGoalsType[]>(url);
+    console.log("Goal Data", data);
+    if (isLoading) {
+      return <Spinner size="small" />;
+    }
     return (
       <FlatList
-        data={goalData}
-        renderItem={({ item }: { item: IGoalCard }) => <GoalCard data={item} />}
-        keyExtractor={(item: IGoalCard) => item.id}
+        data={data}
+        renderItem={({ item }: { item: TGoalsType }) => (
+          <GoalCard data={item} />
+        )}
+        keyExtractor={(item: TGoalsType) => item.id}
       />
     );
   }
+  const url = `/estate/${buildURLSearchParams({ client_id })}`;
+  const { data, isLoading } = useTransactionServerQuery<TEstate[]>(url);
+
+  if (isLoading) {
+    return <Spinner size="small" />;
+  }
   return (
     <FlatList
-      data={estateData}
-      renderItem={({ item }: { item: IEstateCard }) => (
-        <EstateCard data={item} />
-      )}
-      keyExtractor={(item: IEstateCard) => item.id}
+      data={data}
+      renderItem={({ item }: { item: TEstate }) => <EstateCard data={item} />}
+      keyExtractor={(item: TEstate) => item.id}
     />
   );
 }

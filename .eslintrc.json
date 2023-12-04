@@ -4,6 +4,11 @@
     "es2021": true,
     "react-native/react-native": true
   },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "extends": [
     "standard-with-typescript",
     "plugin:react/recommended",
@@ -17,6 +22,7 @@
   },
   "plugins": ["react", "react-native", "simple-import-sort"],
   "rules": {
+    "@typescript-eslint/promise-function-async": "off",
     "react-native/no-single-element-style-arrays": "off",
     "@typescript-eslint/restrict-template-expressions": "off",
     "@typescript-eslint/no-misused-promises": "off",

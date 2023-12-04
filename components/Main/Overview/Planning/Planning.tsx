@@ -2,27 +2,10 @@ import React, { useState } from "react";
 import { SafeAreaView } from "react-native";
 import { VStack } from "@gluestack-ui/themed";
 
+import EstateList from "./common/EstateList";
+import GoalList from "./common/GoalList";
 import PlanningHeader from "./common/PlanningHeader";
-import PlanningList from "./common/PlanningList";
 import SwitchButton from "./common/SwitchButton";
-
-export interface IEstateCard {
-  id: number;
-  name: string;
-  relationship: string;
-  email: string;
-  dob: string;
-  phoneNumber: string;
-  sharePercentage: string;
-}
-
-export interface IGoalCard {
-  id: number;
-  name: string;
-  assetClassPreference: string[];
-  investmentHorizon: number;
-  returnExpectations: string;
-}
 
 export default function Planning() {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -38,7 +21,7 @@ export default function Planning() {
       />
       <PlanningHeader selectedTab={selectedTab} />
       <SafeAreaView style={{ flex: 1 }}>
-        <PlanningList selectedTab={selectedTab} />
+        {selectedTab === 0 ? <GoalList /> : <EstateList />}
       </SafeAreaView>
     </VStack>
   );

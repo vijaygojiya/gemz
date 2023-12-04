@@ -17,7 +17,7 @@ export const Stocks = () => {
       onError: (_data) => {
         console.log("Error calling API", _data);
       },
-    }
+    },
   );
 
   useEffect(() => {
@@ -113,7 +113,7 @@ export const Stocks = () => {
             currency={currency}
             key={cost_value}
           />
-        )
+        ),
       )}
     </Box>
   );

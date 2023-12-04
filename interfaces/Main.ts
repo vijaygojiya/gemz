@@ -5,7 +5,7 @@ export type TTabType =
   | "Analysis"
   | "Planning"
   | "Assets";
-  
+
 export type TInsights =
   | "positions"
   | "performers"

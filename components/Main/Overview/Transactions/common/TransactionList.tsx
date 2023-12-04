@@ -146,8 +146,6 @@ export default function TransactionList() {
   );
 }
 
-
-
 const styles = StyleSheet.create({
   card: {
     backgroundColor: "#fff",

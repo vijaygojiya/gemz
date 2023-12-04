@@ -10,12 +10,7 @@ async function fetcher({ url, init, error }: IFetcherParams) {
       ...init,
       headers: {
         "Accept-Encoding": "gzip",
-        //   {
-        //     "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAwNDg2MTk3LCJpYXQiOjE3MDA0ODI1OTcsImp0aSI6ImQwYzY1MzFmN2VmZTQyNWJhZjVhNTI2OWNkNjM3YzRlIiwidXNlcl9pZCI6NTR9.v9D4yKtBrAZOjn1UwSfby5IgCgtu-dYhepFdypJcErQ",
-        //     "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcwMDU2ODk5NywiaWF0IjoxNzAwNDgyNTk3LCJqdGkiOiIyZTZiMDM4NTYwNTY0ODI0ODYzYmNkYjAzYmZlZTdmZSIsInVzZXJfaWQiOjU0fQ.O-dvBfwNv6I7eEDC7_szjto1qY7koVdpEzbCWH_euIE"
-        // }
-        Authorization: "Token c48ba34430ee8fedb986c15b31cf5e8cbf33acf1",
-        // Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAwNDg2MTk3LCJpYXQiOjE3MDA0ODI1OTcsImp0aSI6ImQwYzY1MzFmN2VmZTQyNWJhZjVhNTI2OWNkNjM3YzRlIiwidXNlcl9pZCI6NTR9.v9D4yKtBrAZOjn1UwSfby5IgCgtu-dYhepFdypJcErQ",
+        Authorization: "Token 7678d7d5e97d64fb183c4c7fef7bbddfcaacccf1",
         ...init.headers,
       },
     });
@@ -63,10 +58,8 @@ export function postJsonFetcher(baseURL: string) {
     options?: Readonly<{ arg: ExtraArgs }>,
   ) => {
     const isArray = Array.isArray(key);
-    const url = baseURL + (isArray ? key[0] : key)
-    const body = formatBody(options?.arg, isArray ? key[1] : undefined)
-    console.log("url",url)
-    console.log("body",body)
+    const url = baseURL + (isArray ? key[0] : key);
+    const body = formatBody(options?.arg, isArray ? key[1] : undefined);
     return await fetcher({
       url,
       init: {
@@ -94,4 +87,31 @@ export function getFetcher(baseURL: string) {
       error: "An error occurred while getting the data.",
     });
   };
+}
+
+export function putFetcher(baseURL: string) {
+  return async <ExtraArgs>(
+    key: string,
+    options?: Readonly<{ arg: ExtraArgs }>,
+  ) =>
+    await fetcher({
+      url: baseURL + key,
+      init: {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: options ? JSON.stringify(options.arg) : undefined,
+      },
+      error: "An error occurred while replacing the data.",
+    });
+}
+
+export function deleteFetcher(baseURL: string) {
+  return async (key: string) =>
+    await fetcher({
+      url: baseURL + key,
+      init: { method: "DELETE" },
+      error: "An error occurred while deleting the data.",
+    });
 }
