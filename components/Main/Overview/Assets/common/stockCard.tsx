@@ -12,6 +12,7 @@ const TableDataItem = ({ text }: any) => (
     fontFamily="Roboto"
     letterSpacing={0.44}
     textTransform="capitalize"
+    numberOfLines={1}
   >
     {text}
   </Text>

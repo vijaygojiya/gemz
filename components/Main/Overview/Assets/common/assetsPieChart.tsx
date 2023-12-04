@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { Dimensions,StyleSheet  } from "react-native";
 import { Box, Text } from "@gluestack-ui/themed";
 
 import {
@@ -10,6 +10,7 @@ import {
 } from "victory-native";
 
 const colors = ["#004793", "#006CDB", "#7ABAFA", "#C9E3FC"];
+const windowWidth = Dimensions.get("window").width;
 
 export const AssetsPieChart = ({ data, total }: any) => {
   const pieData = data.map((item: any, index: number) => ({
@@ -18,6 +19,8 @@ export const AssetsPieChart = ({ data, total }: any) => {
     color: colors[index],
     text: item.type,
   }));
+  const xForChart = windowWidth / 2 + windowWidth * 0.1 - 36;
+  
   return (
     <Box style={styles.container}>
       <VictoryChart height={400}>
@@ -47,7 +50,7 @@ export const AssetsPieChart = ({ data, total }: any) => {
         <VictoryLabel
           textAnchor="middle"
           style={{ fontSize: 18, fontFamily: "Inter", fontWeight: "600" }}
-          x={220}
+          x={xForChart}
           y={200}
           text={`${parseFloat((total / 1000000) as any).toFixed(2)}mn`}
         />
