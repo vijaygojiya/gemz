@@ -1,5 +1,5 @@
 export const convertNumUnit = (number: number) => {
-  const suffixes = ["", "k", "mn", "bn"];
+  const suffixes = ["", "K", "M", "B"];
   let suffixIndex = 0;
 
   const isNegative = number < 0;

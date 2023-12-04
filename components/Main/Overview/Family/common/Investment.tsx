@@ -22,7 +22,7 @@ export default function FamilyInvestment({
     <View style={styles.card} mt="$7">
       <VStack space="lg">
         <Heading size="xl" bold fontWeight="semibold" color={Colors.dark}>
-          {chartData.title}
+          Client&apos;s Family Investment
         </Heading>
         <HStack space="4xl" justifyContent="space-between">
           <VStack style={styles.legendWrapper}>
