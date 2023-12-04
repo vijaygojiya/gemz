@@ -9,6 +9,11 @@ import {
   VStack,
 } from "@gluestack-ui/themed";
 
+import { useTransactionServerDeleteMutation } from "../../../../../hooks/useMutation";
+import revalidate from "../../../../../lib/revalidate";
+
+import { type IBankStatement } from "./VaultzList";
+
 import { Trash } from "lucide-react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -18,38 +23,66 @@ const statusColorMapping: any = {
   completed: "success",
 };
 
-const VaultsCard = ({ data }: any) => {
-  const { name, custodian, status, report_date, account_number } = data;
+const URLs = {
+  delete: "/statement/bank/{id}/",
+};
+
+const useStatementDelete = (id: string) => {
+  const { trigger } = useTransactionServerDeleteMutation(
+    URLs.delete.replace("{id}", id),
+    {
+      onSuccess(data, key, config) {
+        console.log("Statement deleted successfully", data, key, config);
+        revalidate("/statement/bank/");
+      },
+      onError(error, key, config) {
+        console.log("Error deleting statement", error, key, config);
+      },
+    },
+  );
+  return { trigger };
+};
+
+const VaultsCard = (props: { results: IBankStatement }) => {
+  const { id, status, upload_date, relationship_number, custodian_name } =
+    props.results;
+  const formattedDate = new Date(upload_date).toLocaleDateString();
   const badgeAction = statusColorMapping[status];
 
+  const { trigger: deleteStatement } = useStatementDelete(id);
+  const onDeletePress = () => {
+    Alert.alert("Delete Goal", "Are you sure you want to delete this goal?", [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      {
+        text: "Delete",
+        onPress: () => {
+          deleteStatement();
+        },
+      },
+    ]);
+  };
   return (
     <VStack style={styles.card}>
       <HStack style={styles.headerContainer}>
-        <Text style={styles.headerText}>
-          {name} - {custodian}
-        </Text>
+        <Text style={styles.headerText}>{custodian_name}</Text>
         <HStack style={styles.iconContainer}>
-          <TouchableOpacity
-            onPress={() => {
-              Alert.alert(
-                "Delete Estate",
-                "Are you sure you want to delete this estate?",
-              );
-            }}
-          >
+          <TouchableOpacity onPress={onDeletePress}>
             <Icon as={Trash} />
           </TouchableOpacity>
         </HStack>
       </HStack>
       <VStack style={styles.itemContainer} space="md">
         <HStack>
-          <Text style={styles.label}>Account Number -</Text>
-          <Text style={styles.value}>{account_number}</Text>
+          <Text style={styles.label}>Account Number </Text>
+          <Text style={styles.value}>{relationship_number}</Text>
         </HStack>
         <HStack style={styles.items}>
           <Text>
-            <Text style={styles.label}>Date Created -</Text>
-            <Text style={styles.value}>{report_date}</Text>
+            <Text style={styles.label}>Date Created </Text>
+            <Text style={styles.value}>{formattedDate}</Text>
           </Text>
           <Badge
             size="md"
