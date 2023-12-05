@@ -168,7 +168,10 @@ const RelativePerformance = () => {
           );
         })}
       </View>
-      <VictoryChart width={350} padding={{ bottom: 100, right: 50, left: 80 }}>
+      <VictoryChart
+        width={350}
+        padding={{ bottom: 100, top: 50, left: 90, right: 50 }}
+      >
         <VictoryAxis
           style={{
             tickLabels: {
