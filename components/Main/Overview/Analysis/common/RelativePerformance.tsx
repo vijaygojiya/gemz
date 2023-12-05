@@ -31,9 +31,19 @@ const TYPES = [
   { color: "#36CFC9", title: "DXJ US" },
   { color: "#B37FEB", title: "GLIN UP" },
   { color: "#096DD9", title: "GLIN US" },
+  { color: "#096DD9", title: "META" },
+
 ];
 
-const TICKER = ["BABA UN", "BABA US", "DXJ UP", "DXJ US", "GLIN UP", "GLIN US"];
+const TICKER = [
+  "BABA UN",
+  "BABA US",
+  "DXJ UP",
+  "DXJ US",
+  "GLIN UP",
+  "GLIN US",
+  "META",
+];
 
 const client_id = "637fbb50-d59d-467d-b61d-f99aa897b960";
 
@@ -44,6 +54,16 @@ const apiEndPoints = {
 const getColor = (title: string) =>
   TYPES.find((d) => d.title === title)?.color ?? Colors.Neutral5;
 
+interface IGrowth {
+  x: string;
+  y: number;
+  z: string;
+}
+interface IStocks {
+  x: string;
+  y: number;
+  z: string;
+}
 const RelativePerformance = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedAssets, setSelectedAssets] = useState<string[]>([]);
@@ -56,6 +76,8 @@ const RelativePerformance = () => {
       client_id,
     })}`
   );
+
+  console.log("assetsList", assetsList);
 
   const { data: tickerList } = useAnalyticsServerQuery<string[]>(
     `/security/search/${buildURLSearchParams({
@@ -75,12 +97,15 @@ const RelativePerformance = () => {
   const selected = isAssetsSelected ? selectedAssets : selectedTicker;
   const setSelected = isAssetsSelected ? setSelectedAssets : setSelectedTicker;
 
-  const { data: networth } = useRelativePerformanceServerQuery(
+  const { data: networth = [] } = useRelativePerformanceServerQuery<IGrowth[]>(
     apiEndPoints.relativePerformanceNetworth
   );
-  const { data: stocks } = useRelativePerformanceServerQuery(
+
+  const { data: stocks } = useRelativePerformanceServerQuery<IStocks>(
     apiEndPoints.relativePerformanceStocks
   );
+
+  console.log("stocks========>", stocks);
 
   if (isLoading) {
     return <Spinner size="small" />;
@@ -146,7 +171,7 @@ const RelativePerformance = () => {
           );
         })}
       </View>
-      <VictoryChart width={350}>
+      <VictoryChart width={350} padding={{ bottom: 100, right: 50, left: 80 }}>
         <VictoryAxis
           style={{
             tickLabels: {
@@ -163,7 +188,12 @@ const RelativePerformance = () => {
           }}
         />
         {selected.map((item, index) => {
+          const mainData = isAssetsSelected ? networth : stocks;
+          const networthData = mainData.filter(({ z }) => {
+            return z === item;
+          });
           const color = getColor(item);
+
           return (
             <VictoryLine
               key={index}
@@ -171,13 +201,7 @@ const RelativePerformance = () => {
                 data: { stroke: color },
                 parent: { border: "1px solid #ccc" },
               }}
-              data={[
-                { y: 1 },
-                { y: 3 + index },
-                { y: 5 },
-                { y: 4 + index },
-                { y: 7 + index },
-              ]}
+              data={networthData}
             />
           );
         })}
