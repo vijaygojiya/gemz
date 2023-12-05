@@ -2,7 +2,7 @@ import { useContext } from "react";
 
 import { AnalyticsServerUrl, TransactionServerUrl } from "../constants/strings";
 import { AuthContext } from "../context/AuthProvider";
-import { getFetcher, postJsonFetcher } from "../lib/fetcher";
+import { getFetcher } from "../lib/fetcher";
 
 import useSWR, { type SWRConfiguration } from "swr";
 
@@ -46,11 +46,4 @@ export function useAnalyticsServerQuery<Data>(
   config?: SWRConfiguration<Data, Error>
 ) {
   return useQuery<Data>(key, getFetcher(AnalyticsServerUrl), config);
-}
-
-export function useRelativePerformanceServerQuery<Data>(
-  key: string | null,
-  config?: SWRConfiguration<Data, Error>
-) {
-  return useQuery<Data>(key, postJsonFetcher(AnalyticsServerUrl), config);
 }

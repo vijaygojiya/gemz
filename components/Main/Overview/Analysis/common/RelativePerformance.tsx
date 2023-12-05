@@ -4,10 +4,8 @@ import { Spinner } from "@gluestack-ui/themed";
 
 import { DownArrow } from "../../../../../assets/svgs";
 import Colors from "../../../../../constants/Colors";
-import {
-  useAnalyticsServerQuery,
-  useRelativePerformanceServerQuery,
-} from "../../../../../hooks/useQuery";
+import { useRelativePerformanceServerQuery } from "../../../../../hooks/useMutation";
+import { useAnalyticsServerQuery } from "../../../../../hooks/useQuery";
 import buildURLSearchParams from "../../../../../lib/buildURLSearchParams";
 
 import DropDownListItem from "./DropDownListItem";
@@ -32,16 +30,6 @@ const TYPES = [
   { color: "#B37FEB", title: "GLIN UP" },
   { color: "#096DD9", title: "GLIN US" },
   { color: "#096DD9", title: "META" },
-];
-
-const TICKER = [
-  "BABA UN",
-  "BABA US",
-  "DXJ UP",
-  "DXJ US",
-  "GLIN UP",
-  "GLIN US",
-  "META",
 ];
 
 const client_id = "637fbb50-d59d-467d-b61d-f99aa897b960";
@@ -76,9 +64,7 @@ const RelativePerformance = () => {
     })}`
   );
 
-  console.log("assetsList", assetsList);
-
-  const { data: tickerList } = useAnalyticsServerQuery<string[]>(
+  const { data: tickerList = [] } = useAnalyticsServerQuery<string[]>(
     `/security/search/${buildURLSearchParams({
       client_id,
     })}`
@@ -90,19 +76,21 @@ const RelativePerformance = () => {
     ? assetsList.map((item) => ({
         title: item,
       }))
-    : TICKER.map((item) => ({
+    : tickerList.map((item) => ({
         title: item,
       }));
   const selected = isAssetsSelected ? selectedAssets : selectedTicker;
   const setSelected = isAssetsSelected ? setSelectedAssets : setSelectedTicker;
 
-  const { data: networth = [] } = useRelativePerformanceServerQuery<IGrowth[]>(
-    apiEndPoints.relativePerformanceNetworth
-  );
+  const { trigger: fetchNetworth, data: networth = [] } =
+    useRelativePerformanceServerQuery<unknown, IGrowth>(
+      apiEndPoints.relativePerformanceNetworth
+    );
 
-  const { data: stocks } = useRelativePerformanceServerQuery<IStocks[]>(
-    apiEndPoints.relativePerformanceStocks
-  );
+  const { trigger: fetchStocks, data: stocks = [] } =
+    useRelativePerformanceServerQuery<unknown, IStocks>(
+      apiEndPoints.relativePerformanceStocks
+    );
 
   if (isLoading) {
     return <Spinner size="small" />;
@@ -139,7 +127,25 @@ const RelativePerformance = () => {
           valueField="title"
           placeholder={isAssetsSelected ? "Search Asset" : "Search Ticker"}
           value={selected}
-          onChange={setSelected}
+          onChange={(data) => {
+            setSelected(data);
+            if (isAssetsSelected) {
+              fetchNetworth({
+                asset_class: data,
+                client_id,
+                custodian_id: "",
+                start_date: "",
+                end_date: "",
+              });
+            } else {
+              fetchStocks({
+                client_id,
+                security_id: data,
+                start_date: "",
+                end_date: "",
+              });
+            }
+          }}
           containerStyle={styles.dropDownListContainer}
           renderSelectedItem={() => <View />}
           itemContainerStyle={{ borderRadius: 4 }}
