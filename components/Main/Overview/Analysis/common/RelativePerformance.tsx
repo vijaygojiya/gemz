@@ -32,7 +32,6 @@ const TYPES = [
   { color: "#B37FEB", title: "GLIN UP" },
   { color: "#096DD9", title: "GLIN US" },
   { color: "#096DD9", title: "META" },
-
 ];
 
 const TICKER = [
@@ -101,11 +100,9 @@ const RelativePerformance = () => {
     apiEndPoints.relativePerformanceNetworth
   );
 
-  const { data: stocks } = useRelativePerformanceServerQuery<IStocks>(
+  const { data: stocks } = useRelativePerformanceServerQuery<IStocks[]>(
     apiEndPoints.relativePerformanceStocks
   );
-
-  console.log("stocks========>", stocks);
 
   if (isLoading) {
     return <Spinner size="small" />;
